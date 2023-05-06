@@ -3,18 +3,36 @@
 
 {% block content %}
 <main class="form-signin w-100 m-auto">
-    <form action="." method="post">
+    <form action="/sign-up" method="post">
         {% csrf_token %}
         <div class="mb-3 row">
-            <div class="fieldWrapper">
-                {{ form.password.errors }}
-                <label for="{{ form.password.id_for_label }}" class="col-sm-2 col-form-label">Senha:</label>
-                <div class="col-sm-10">
-                    {{ form.password }}
-                </div>
+            {{ form.name.errors }}
+            <label for="{{ form.name.id_for_label }}" class="col-sm-3 col-form-label">Nome:</label>
+            <div class="col-sm-10">
+                {{ form.name }}
             </div>
         </div>
-        <input type="submit" value="Submit">
+
+        <div class="mb-3 row">
+            {{ form.email.errors }}
+            <label for="{{ form.email.id_for_label }}" class="col-sm-3 col-form-label">E-mail:</label>
+            <div class="col-sm-10">
+                {{ form.email }}
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            {{ form.password.errors }}
+            <label for="{{ form.password.id_for_label }}" class="col-sm-3 col-form-label">Senha:</label>
+            <div class="col-sm-10">
+                {{ form.password }}
+            </div>
+        </div>
+        
+        <div class="mb-3 row">
+            <button type="submit" class="btn btn-primary mb-3">Confirmar</button>
+        </div>
+
     </form>
 </main>
 {% endblock %}

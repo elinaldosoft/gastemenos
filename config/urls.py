@@ -19,10 +19,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from app.accounts.views import AccountsView, SignUpView
+from app.accounts.views import SignInView, SignUpView
 
 urlpatterns = [
-    path("", AccountsView.as_view(), name="index"),
+    path("sign-in", SignInView.as_view(), name="sign-in"),
     path("sign-up", SignUpView.as_view(), name="sign-up"),
     path("admin/", admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
