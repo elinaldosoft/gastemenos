@@ -15,3 +15,4 @@
 
 ### Poetry
 - https://python-poetry.org/docs
+- Use the version Poetry (version 1.3.2)
