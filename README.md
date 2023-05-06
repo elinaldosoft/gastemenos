@@ -17,3 +17,7 @@
 ### Poetry
 - https://python-poetry.org/docs
 - Use the version Poetry (version 1.3.2)
+
+### Create user to admin and access dashboard
+- python manage.py createsuperuser
+- http://127.0.0.1:8000/admin
