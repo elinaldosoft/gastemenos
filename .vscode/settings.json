@@ -1,0 +1,40 @@
+{
+    "editor.rulers": [160],
+    "python.linting.pylintEnabled": false,
+    "python.linting.pycodestyleEnabled": false,
+    "python.linting.pycodestyleArgs": [
+        "--ignore=E501"
+    ],
+    "python.analysis.diagnosticMode": "workspace",
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django",
+        "--django-settings-module=config.settings.base",
+        "--disable=missing-docstring,line-too-long,broad-except",
+    ],
+    "python.autoComplete.extraPaths":[
+        "${workspaceFolder}/venv/lib/python3",
+        "${workspaceFolder}/venv/lib/python3/site-packages"
+    ],
+     "files.exclude": {
+         "**/.git": true,
+         "**/.DS_Store": true,
+         ".vscode": true,
+         "**/__pycache__": true,
+         "**/**/*.pyc": true,
+         "**/venv": true,
+   },
+   "[python]": {
+       "editor.formatOnSave": true
+    },
+    "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Args": [
+        "--max-line-length=160"
+    ],
+    "git.ignoreLimitWarning": false,
+    "python.linting.enabled": true,
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/venv/lib/python3",
+        "${workspaceFolder}/venv/lib/python3/site-packages"
+    ],
+    "python.linting.flake8Enabled": true
+}
