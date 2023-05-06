@@ -5,6 +5,7 @@
 - source venv/bin/activate
 - poetry install
 - python manage.py check
+- python manage.py migrate (To create the structure (schemas, tables) the database)
 
 ### Running project
 - python manage.py runserver

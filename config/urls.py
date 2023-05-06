@@ -15,14 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 
-from app.accounts.views import AccountsView
+from app.accounts.views import AccountsView, SignUpView
 
 urlpatterns = [
     path("", AccountsView.as_view(), name="index"),
+    path("sign-up", SignUpView.as_view(), name="sign-up"),
     path("admin/", admin.site.urls),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 admin.site.site_header = 'Gaste Menos ®'
 admin.site.site_title = 'Gaste Menos ®'
