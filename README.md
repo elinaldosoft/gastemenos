@@ -1,5 +1,5 @@
 ### How to install the project
-- git clone git@github.com:your-username-here/gastemenos.git gastemenos
+- git clone git@github.com:elinaldosoft/gastemenos.git gastemenos
 - cd gastemenos
 - python3.11 -m venv venv
 - source venv/bin/activate
