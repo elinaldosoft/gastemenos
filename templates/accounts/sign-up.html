@@ -2,37 +2,50 @@
 {% load static %}
 
 {% block content %}
-<main class="form-signin w-100 m-auto">
-    <form action="/sign-up" method="post">
-        {% csrf_token %}
-        <div class="mb-3 row">
-            {{ form.name.errors }}
-            <label for="{{ form.name.id_for_label }}" class="col-sm-3 col-form-label">Nome:</label>
-            <div class="col-sm-10">
-                {{ form.name }}
+<div class="container-sm">
+    <div class="row align-items-center">
+        <div class="col-sm-7">
+            <div class="p-1 mb-4 rounded-3">
+                <div class="container-fluid py-5">
+                  <h1 class="display-5 fw-bold">Cadastro</h1>
+                  <p class="col-md-8 fs-4">Crie sua conta e organize sua vida financeira.</p>
+                </div>
             </div>
         </div>
+        <div class="col-sm-5">
+            <form action="/sign-up" method="post">
+                {% csrf_token %}
+                <div class="mb-3 row">
+                    {{ form.name.errors }}
+                    <label for="{{ form.name.id_for_label }}" class="col-sm-3 col-form-label">Nome:</label>
+                    <div class="col-sm-12">
+                        {{ form.name }}
+                    </div>
+                </div>
 
-        <div class="mb-3 row">
-            {{ form.email.errors }}
-            <label for="{{ form.email.id_for_label }}" class="col-sm-3 col-form-label">E-mail:</label>
-            <div class="col-sm-10">
-                {{ form.email }}
-            </div>
-        </div>
+                <div class="mb-3 row">
+                    {{ form.email.errors }}
+                    <label for="{{ form.email.id_for_label }}" class="col-sm-3 col-form-label">E-mail:</label>
+                    <div class="col-sm-12">
+                        {{ form.email }}
+                    </div>
+                </div>
 
-        <div class="mb-3 row">
-            {{ form.password.errors }}
-            <label for="{{ form.password.id_for_label }}" class="col-sm-3 col-form-label">Senha:</label>
-            <div class="col-sm-10">
-                {{ form.password }}
-            </div>
+                <div class="mb-3 row">
+                    {{ form.password.errors }}
+                    <label for="{{ form.password.id_for_label }}" class="col-sm-3 col-form-label">Senha:</label>
+                    <div class="col-sm-12">
+                        {{ form.password }}
+                    </div>
+                </div>
+                
+                <div class="mb-3 row">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button style="border-radius: 50px;" type="submit" class="btn btn-dark btn-lg">Confirmar</button>
+                    </div>
+                </div>
+            </form>
         </div>
-        
-        <div class="mb-3 row">
-            <button type="submit" class="btn btn-primary mb-3">Confirmar</button>
-        </div>
-
-    </form>
-</main>
+    </div>
+</div>
 {% endblock %}
