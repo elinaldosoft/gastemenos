@@ -121,13 +121,13 @@
       </div>
     </nav>
     {% block content %}{% endblock %}
-    <div class="container">
-      <footer class="py-5">
-        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
-          <p>© 2023 Gaste menos e seja feliz.</p>
-        </div>
-      </footer>
-    </div>
+    <footer class="bd-footer py-5 mt-5 bg-light">
+      <!-- Copyright -->
+      <div class="text-center p-3">
+        <span> &copy; {% now "Y" %} Gaste menos e seja feliz</span>
+      </div>
+      <!-- Copyright -->
+    </footer>
     {% block js_inline %}{% endblock %}
   </body>
 </html>
