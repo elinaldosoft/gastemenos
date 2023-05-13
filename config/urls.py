@@ -22,10 +22,11 @@ from django.conf.urls.static import static
 from django.urls import path
 
 from app.accounts.views import SignInView, SignUpView
-from app.financial.views import DashboardView
+from app.financial.views import DashboardView, FinancialView
 
 urlpatterns = [
     path("", RedirectView.as_view(url='sign-in', permanent=False), name='index'),
+    path("new", FinancialView.as_view(), name="new"),
     path("sign-in", SignInView.as_view(), name="sign-in"),
     path("logout", auth_views.LogoutView.as_view(), name='logout'),
     path("sign-up", SignUpView.as_view(), name="sign-up"),

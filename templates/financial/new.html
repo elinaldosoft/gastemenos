@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-sm signup">
+    <div class="">
+
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="p-1 mb-4 rounded-3">
+                    <div class="container-fluid py-5">
+                      <h3 class="display-5 fw-bold">Cadastro de nova despesa.</h3>
+                    </div>
+                </div>
+                <form action="/sign-up" method="post">
+                    {% csrf_token %}
+                    <div class="form-outline mb-4">
+                        {{ form.title.errors }}
+                        <label for="{{ form.title.id_for_label }}" class="col-sm-12 col-form-label">Nome:</label>
+                        <div class="col-sm-12">
+                            {{ form.title }}
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button style="border-radius: 50px;" type="submit" class="btn btn-dark btn-lg">Confirmar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-7">
+                <div class="p-1 mb-4 rounded-3">
+                    <figure class="figure">
+                    <img src="static\img\financial.jpg" class="figure-img img-fluid float-end mx-auto" alt="...">                        
+                    </figure>
+                </div>            
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
