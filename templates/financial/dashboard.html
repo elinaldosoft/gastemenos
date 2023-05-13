@@ -2,32 +2,41 @@
 {% load static %}
 
 {% block content %}
-<div class="container-sm">
+<div class="container-sm dashboard">
     <div class="row py-5">
-        <div class="col-sm-6"><h1>Despesas</h1></div>
-        <form action="{% url 'dashboard' %}" method="get">
-            <div class="col-sm-6">
+        <div class="col-sm-3"><h1>Despesas</h1></div>
+        <div class="col-sm-4 mb-3">
+            <a href="{% url 'create_or_edit_expense' %}" class="link-primary">Adicionar nova despesa</a>
+        </div>
+        <div class="col-sm-5">
+            <form action="{% url 'dashboard' %}" method="get">
                 <div class="input-group mb-3">
                     <input type="text" name="search" value="{{ request.GET.search }}" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2">
                     <button class="btn btn btn-primary" type="submit"><i class="fas fa-search"></i>Buscar <i class="fas fa-search"></i></button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
     
     {% include 'includes/messages.html' %}
 
     <div class="row py-1">
         <div class="col-sm-12">
-            <a href="{% url 'create_or_edit_expense' %}" class="link-primary">Adicionar nova despesa</a>
         </div>
     </div>
     {% if page_obj %}
         {% include 'includes/expenses_table.html' %}
     {% else %}
         <div class="row py-5">
-            <div class="col-sm-12">
+            <div class="col-sm-5">
                 <h3>Seja bem vindo, cadastre sua primeira despesa.</h3>
+            </div>
+            <div class="col-sm-7">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <figure class="figure">
+                    <img src="{% static 'img/dashboard.jpg' %}" class="figure-img img-fluid float-end mx-auto" alt="Despesas">
+                    </figure>
+                </div>            
             </div>
         </div>
     {% endif %}

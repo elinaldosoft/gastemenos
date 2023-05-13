@@ -91,6 +91,13 @@
       .errorlist {
           color: red;
       }
+
+      .dashboard img {
+          max-width:500px;
+          max-height:500px;
+          width: auto;
+          height: auto;
+      }
     </style>
     
     <!-- Custom styles for this template -->
@@ -109,6 +116,7 @@
             <div class="navbar-nav">
               <!-- Menu Itens -->
               <a class="nav-item nav-link" id="navbar" href="{% url 'sign-up' %}"><button type="button" class="btn btn-outline-info cad">Cadastre-se</button></a>
+              <a class="nav-item nav-link" id="navbar" href="{% url 'sign-in' %}"><button type="button" class="btn btn-outline-info cad">Entrar</button></a>
             </div>
           {% else %}
             <small> Olá, {{ user.name }} </small>
