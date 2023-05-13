@@ -3,6 +3,77 @@
 
 {% block content %}
 <div class="container-sm">
+    <div class="row py-5">
+        <div class="col-sm-6"><h1>Despesas</h1></div>
+        <form action="{% url 'dashboard' %}" method="get">
+            <div class="col-sm-6">
+                <div class="input-group mb-3">
+                    <input type="text" name="search" value="{{ request.GET.search }}" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2">
+                    <button class="btn btn btn-primary" type="submit"><i class="fas fa-search"></i>Buscar <i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
     
+    {% include 'includes/messages.html' %}
+
+    <div class="row py-1">
+        <div class="col-sm-12">
+            <a href="{% url 'create_or_edit_expense' %}" class="link-primary">Adicionar nova despesa</a>
+        </div>
+    </div>
+
+    <table id="expenses_table" class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Título</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Vencimento</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Status</th>
+            <th scope="col">Opções</th>
+            <th scope="col">Pago?</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for expense in page_obj %}
+          <tr>
+            <th><a href="{% url 'edit_expense' pk=expense.id %}" class="link-primary text-decoration-none">{{ expense.id }}</a></th>
+            <td>{{ expense.title }}</td>
+            <td>Otto</td>
+            <td>{{ expense.expires_at }}</td>
+            <td>R$: {{ expense.amount }}</td>
+            <td>{{ expense.status }}</td>
+            <td><a href="{% url 'edit_expense' pk=expense.id %}" class="link-primary">Editar</a></td>
+            <td>{{ expense.is_paid }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    
+    {% if page_obj.has_other_pages %}
+    <div class="btn-group" role="group" aria-label="Item pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">&laquo;</a>
+        {% endif %}
+
+        {% for page_number in page_obj.paginator.page_range %}
+            {% if page_obj.number == page_number %}
+                <button class="btn btn-outline-primary active">
+                    <span>{{ page_number }}</span>
+                </button>
+            {% else %}
+                <a href="?page={{ page_number }}" class="btn btn-outline-primary">
+                    {{ page_number }}
+                </a>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">&raquo;</a>
+        {% endif %}
+    </div>
+    {% endif %}
+
 </div>
 {% endblock %}

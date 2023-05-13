@@ -19,18 +19,20 @@ from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.views.generic.base import RedirectView
 from django.conf.urls.static import static
+from django.contrib.auth.decorators import login_required
 from django.urls import path
 
 from app.accounts.views import SignInView, SignUpView
 from app.financial.views import DashboardView, FinancialView
 
 urlpatterns = [
-    path("", RedirectView.as_view(url='sign-in', permanent=False), name='index'),
-    path("new", FinancialView.as_view(), name="new"),
+    path("", RedirectView.as_view(url='sign-in', permanent=False), name='home_page'),  # Redirect to sign-in
     path("sign-in", SignInView.as_view(), name="sign-in"),
-    path("logout", auth_views.LogoutView.as_view(), name='logout'),
     path("sign-up", SignUpView.as_view(), name="sign-up"),
-    path("dashboard", DashboardView.as_view(), name="dashboard"),
+    path("logout", login_required(auth_views.LogoutView.as_view()), name='logout'),
+    path("nova", login_required(FinancialView.as_view()), name="create_or_edit_expense"),
+    path("conta/<int:pk>", login_required(FinancialView.as_view()), name="edit_expense"),
+    path("dashboard", login_required(DashboardView.as_view()), name="dashboard"),
     path("admin/", admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

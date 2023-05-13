@@ -7,11 +7,13 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.111.3">
     <title>Gaste menos e seja feliz</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- Favicons -->
     <meta name="theme-color" content="#712cf9">
-
+    {% block extra_js %}{% endblock %}
+    {% block extra_css %}{% endblock %}
     <style>
 
       @import url('https://fonts.googleapis.com/css2?family=Graduate&family=Roboto:wght@100;300;400;500;700;900&display=swap');
@@ -27,12 +29,6 @@
       .navbar { 
           padding: 15px 30px;
           justify-content: space-between;
-      }
-
-      a {
-          text-decoration: none;
-          color:black;
-
       }
 
       .logo {
@@ -104,7 +100,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-sm">
         <!-- Logo -->
-        <a class="navbar-brand logo" href="#">GM<span>$F</span></a>
+        <a class="navbar-brand logo" href="{% url 'home_page' %}">GM<span>$F</span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Alterna navegação">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -125,5 +121,13 @@
       </div>
     </nav>
     {% block content %}{% endblock %}
+    <div class="container">
+      <footer class="py-5">
+        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+          <p>© 2023 Gaste menos e seja feliz.</p>
+        </div>
+      </footer>
+    </div>
+    {% block js_inline %}{% endblock %}
   </body>
 </html>

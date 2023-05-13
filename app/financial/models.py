@@ -2,6 +2,11 @@ from django.db import models
 
 from app.models import BaseModel
 
+STATUS_EXPENSE = (
+    ('paid', 'Pago'),
+    ('pending', 'Pendente'),
+    ('overdue', 'Vencida'),
+)
 
 class TypeExpense(BaseModel):
     name = models.CharField(max_length=255, verbose_name='Nome')
@@ -20,11 +25,7 @@ class Expense(BaseModel):
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Valor')
     expires_at = models.DateField(verbose_name='Vencimento')
     paid_at = models.DateField(verbose_name='Pago em', null=True, blank=True)
-    status = models.CharField(max_length=255, verbose_name='Status', null=True, blank=True, choices=(
-        ('paid', 'Pago'),
-        ('pending', 'Pendente'),
-        ('overdue', 'Vencida'),
-    ))
+    status = models.CharField(max_length=255, verbose_name='Status', null=True, blank=True, choices=STATUS_EXPENSE)
     notes = models.TextField(verbose_name='Observações', null=True, blank=True)
     type_expense = models.ManyToManyField(TypeExpense, verbose_name='Tipo de Despesa')
     user = models.ForeignKey('accounts.User', on_delete=models.DO_NOTHING, verbose_name='Usuário')
@@ -35,3 +36,8 @@ class Expense(BaseModel):
     class Meta:
         verbose_name = 'Despesa'
         verbose_name_plural = 'Despesas'
+        ordering = ['-created_at']
+
+    @property
+    def is_paid(self) -> bool:
+        return self.status == 'paid' and self.paid_at
