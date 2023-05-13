@@ -91,7 +91,10 @@
           width: 100%;
           margin: 0 auto;
       }
-      
+
+      .errorlist {
+          color: red;
+      }
     </style>
     
     <!-- Custom styles for this template -->
@@ -106,10 +109,18 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse menu" id="navbar">
+          {% if not user.is_authenticated %}
             <div class="navbar-nav">
               <!-- Menu Itens -->
-              <a class="nav-item nav-link" id="navbar" href="#"><button type="button" class="btn btn-outline-info cad">Cadastre-se</button></a>
+              <a class="nav-item nav-link" id="navbar" href="{% url 'sign-up' %}"><button type="button" class="btn btn-outline-info cad">Cadastre-se</button></a>
             </div>
+          {% else %}
+            <small> Olá, {{ user.name }} </small>
+            <div class="navbar-nav">
+              <!-- Menu Itens -->
+              <a class="nav-item nav-link" id="navbar" href="{% url 'logout' %}?next=sign-in"><button type="button" class="btn btn-outline-info cad">Sair</button></a>
+            </div>
+          {% endif %}
         </div>
       </div>
     </nav>
