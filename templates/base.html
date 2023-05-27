@@ -31,6 +31,12 @@
           justify-content: space-between;
       }
 
+      @media (max-width: 540px) {
+        .navbar { 
+          padding: 5px 0px;
+      }
+      }
+
       .logo {
           font-size: 24px;
           font-family: 'Graduate', cursive;
@@ -45,6 +51,11 @@
       .menu {
           align-items: end;
           flex-grow: 0;
+      }
+
+      .username-top {
+        font-weight: 400;
+        margin: auto 3px auto 0;
       }
       
       .container { 
@@ -98,6 +109,11 @@
           width: auto;
           height: auto;
       }
+
+      a:link{
+        text-decoration:none;
+      }
+
     </style>
     
     <!-- Custom styles for this template -->
@@ -119,20 +135,20 @@
               <a class="nav-item nav-link" id="navbar" href="{% url 'sign-in' %}"><button type="button" class="btn btn-outline-info cad">Entrar</button></a>
             </div>
           {% else %}
-            <small> Olá, {{ user.name }} </small>
+            <h5 class="username-top"> Olá, <span class="text-info" style="font-weight: 500;">{{ user.name }}</span></h5>
             <div class="navbar-nav">
               <!-- Menu Itens -->
-              <a class="nav-item nav-link" id="navbar" href="{% url 'logout' %}?next=sign-in"><button type="button" class="btn btn-outline-info cad">Sair</button></a>
+              <a class="nav-item nav-link" id="navbar" href="{% url 'logout' %}?next=sign-in"><button type="button" class="btn btn-outline-secondary cad">Sair</button></a>
             </div>
           {% endif %}
         </div>
       </div>
     </nav>
     {% block content %}{% endblock %}
-    <footer class="bd-footer py-5 mt-5 bg-light">
+    <footer class="bd-footer py-1 mt-2 bg-light">
       <!-- Copyright -->
       <div class="text-center p-3">
-        <span> &copy; {% now "Y" %} Gaste menos e seja feliz</span>
+        <span> &copy; {% now "Y" %} Gaste menos e seja feliz. Todos os direitos reservados</span>
       </div>
       <!-- Copyright -->
     </footer>
