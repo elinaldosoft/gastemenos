@@ -135,3 +135,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = '/dashboard'
 LOGIN_URL = '/sign-in'
+
+# email configs
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = str('gastemenos2023@gmail.com')  # TODO ENV
+EMAIL_HOST_PASSWORD = str('nojzflbzmvuzrvyg') # TODO ENV

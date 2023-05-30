@@ -1,5 +1,6 @@
-from django.contrib.auth.views import LoginView
-from django.urls import reverse
+from django.contrib.auth.views import LoginView, PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
@@ -27,3 +28,13 @@ class SignUpView(View):
             form.save()
             return redirect(reverse("sign-in"))
         return render()
+
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'accounts/password_reset.html'
+    email_template_name = 'accounts/password_reset_email.html'
+    subject_template_name = 'accounts/password_reset_subject'
+    success_message = "Se o email informado na solicitação for o cadastrado no sistema você receberá um link para redefinição de senha caso contrário entre em contato." \
+                      " suporte: gastemenos2023@gmail.com"
+
+
+    success_url = reverse_lazy('home_page')
