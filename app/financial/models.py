@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 from app.models import BaseModel
@@ -41,3 +43,7 @@ class Expense(BaseModel):
     @property
     def is_paid(self) -> bool:
         return self.status == 'paid' and self.paid_at
+
+    @property
+    def is_overdue(self) -> bool:
+        return self.status != 'paid' and self.expires_at < datetime.utcnow()
