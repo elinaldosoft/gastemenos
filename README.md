@@ -41,3 +41,8 @@
 - poetry install
 - python manage.py check
 - python manage.py migrate (To create the structure (schemas, tables) the database)
+
+### How execute test
+- python manage.py test (test full)
+- python manage.py test app/accounts (tests account)
+- python manage.py test app/financial (tests financial)
