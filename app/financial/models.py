@@ -5,9 +5,9 @@ from django.db import models
 from app.models import BaseModel
 
 STATUS_EXPENSE = (
-    ('paid', 'Pago'),
     ('pending', 'Pendente'),
     ('overdue', 'Vencida'),
+    ('paid', 'Pago'),
 )
 
 class TypeExpense(BaseModel):

@@ -46,6 +46,14 @@
                     </div>
 
                     <div class="form-outline mb-4">
+                        {{ form.paid_at.errors }}
+                        <label for="{{ form.paid_at.id_for_label }}" class="col-sm-12 col-form-label">Pago em:</label>
+                        <div class="col-sm-12">
+                            {{ form.paid_at }}
+                        </div>
+                    </div>
+
+                    <div class="form-outline mb-4">
                         {{ form.status.errors }}
                         <label for="{{ form.status.id_for_label }}" class="col-sm-12 col-form-label">Status:</label>
                         <div class="col-sm-12">
@@ -94,6 +102,10 @@
         titleFormat: 'mmmm yyyy'
     };
     $('#datepicker').datepicker({
+        uiLibrary: 'bootstrap5',
+        locale: 'pt-br'
+    });
+    $('#datepicker_paid_at').datepicker({
         uiLibrary: 'bootstrap5',
         locale: 'pt-br'
     });
