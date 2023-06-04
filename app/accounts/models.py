@@ -25,6 +25,9 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     )
     username = None
 
+    ip = models.GenericIPAddressField(verbose_name=_('IP of register'), blank=True, null=True)
+    agent = models.CharField(max_length=255, verbose_name=_('Agent of register'), blank=True, null=True)
+
     USERNAME_FIELD = 'email'
     last_login = None
 

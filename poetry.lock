@@ -145,6 +145,18 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-ipware"
+version = "5.0.0"
+description = "A Django application to retrieve user's IP address"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "django-ipware-5.0.0.tar.gz", hash = "sha256:4fa5607ee85e12ee5e158bc7569ff1e134fb1579681aa1ff3f0ed04be21be153"},
+    {file = "django_ipware-5.0.0-py2.py3-none-any.whl", hash = "sha256:80b52a3f571a371519cc552798f1015b934dd5dd7738bfad87e101e861bd21b8"},
+]
+
+[[package]]
 name = "django-jazzmin"
 version = "2.6.0"
 description = "Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy"
@@ -596,4 +608,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "b961544c6f54f4e499f3e99d686d6f2424c951fd7f49549aff0548e5eb07cac6"
+content-hash = "a6a8f9e3466e123a4f2ff0a262c6189db9df3940eb60ad4a156d5ee38b5eab16"
