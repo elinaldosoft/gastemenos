@@ -10,9 +10,10 @@ class UserAdmin(GenericUserAdmin):
     list_display = ['id', 'name', 'email', 'created_at']
     search_fields = ['name', 'email']
     ordering = ['-id']
+    readonly_fields = ['created_at', 'updated_at', 'ip', 'agent']
 
     fieldsets = (
-        (None, {'fields': ('name', 'email', 'password')}),
+        (None, {'fields': ('name', 'email', 'password', 'created_at', 'updated_at', 'ip', 'agent')}),
         (
             _('Permissions'),
             {
