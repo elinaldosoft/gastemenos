@@ -28,4 +28,5 @@ LOGGING = {
     },
 }
 
+STATICFILES_DIRS = []
 STATIC_ROOT = '/home/ubuntu/backend/static'
