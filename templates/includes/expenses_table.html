@@ -7,8 +7,8 @@
         <th scope="col">Vencimento</th>
         <th scope="col">Valor</th>
         <th scope="col">Status</th>
-        <th scope="col">Opções</th>
-        <th scope="col">Pago?</th>
+        <th scope="col">Pago em:</th>
+        <th scope="col" colspan="2">Opções</th>        
       </tr>
     </thead>
     <tbody>
@@ -16,12 +16,21 @@
       <tr>
         <th><a href="{% url 'edit_expense' pk=expense.id %}" class="link-primary text-decoration-none">{{ expense.id }}</a></th>
         <td>{{ expense.title }}</td>
-        <td>Otto</td>
-        <td>{{ expense.expires_at }}</td>
-        <td>R$: {{ expense.amount }}</td>
-        <td>{{ expense.status }}</td>
-        <td><a href="{% url 'edit_expense' pk=expense.id %}" class="link-primary">Editar</a></td>
-        <td>{{ expense.is_paid }}</td>
+        <td>Outros</td>
+        <td>{{ expense.expires_at|date:"d/m/Y" }}</td>
+        <td>R$ {{ expense.amount }}</td>
+        <td>{{ expense.status }}</td>        
+        {% if expense.is_paid == False %}
+          <td>Pendente</td>
+        {% else %}
+          <td>{{ expense.is_paid|date:"d/m/Y" }}</td>
+        {% endif %}
+        <td>
+          <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+            <a href="{% url 'edit_expense' pk=expense.id %}" class="btn btn-warning">Editar</a>          
+            <a href="{% url 'delete_expense' pk=expense.id %}" class="btn btn-danger">Remover</a>
+          </div>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

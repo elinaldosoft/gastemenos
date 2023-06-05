@@ -6,9 +6,11 @@ from django.contrib.postgres.search import SearchVector
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
+from django.utils import timezone
 
 from .models import Expense
 from .forms import ExpenseForm
+from .forms import ExpenseDeleteForm
 
 
 class DashboardView(ListView):
@@ -56,4 +58,29 @@ class FinancialView(View):
             else:
                 messages.success(request, "Despesa criada com sucesso.")
             return redirect(reverse("dashboard"))
+        return render(request, self.template_name)
+
+class FinancialDeleteView(View):
+    template_name = "financial/remove.html"
+    form_class = ExpenseDeleteForm
+
+    def get_object(self, pk: int = None) -> Expense:
+        if pk and str(pk).isnumeric():
+            return get_object_or_404(Expense, pk=pk, user=self.request.user)
+
+    def get(self, request: HttpRequest, pk: int = None) -> HttpResponse:
+        expense = self.get_object(pk)
+        form = self.form_class(instance=expense)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request: HttpRequest) -> HttpResponse:
+        expense = self.get_object(request.POST.get('id'))
+        form = self.form_class(request.POST, instance=expense)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = request.user
+            form.deleted_at = timezone.now()
+            form.save()
+            messages.success(request, "Despesa removida com sucesso.")            
+            return redirect(reverse("dashboard"))        
         return render(request, self.template_name)

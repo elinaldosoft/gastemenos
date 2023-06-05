@@ -5,7 +5,7 @@
 <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
-<div class="container-sm signup">
+<div class="container-sm signup mb-5">
     <div class="">
         <div class="row">
             <div class="col-sm-5">
@@ -37,19 +37,24 @@
                         </div>
                     </div>
 
-                    <div class="form-outline mb-4">
-                        {{ form.expires_at.errors }}
-                        <label for="{{ form.expires_at.id_for_label }}" class="col-sm-12 col-form-label">Vencimento:</label>
-                        <div class="col-sm-12">
-                            {{ form.expires_at }}
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-outline mb-4">
+                                {{ form.expires_at.errors }}
+                                <label for="{{ form.expires_at.id_for_label }}" class="col-sm-12 col-form-label">Vencimento:</label>
+                                <div class="col-sm-12">
+                                    {{ form.expires_at }}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-outline mb-4">
-                        {{ form.paid_at.errors }}
-                        <label for="{{ form.paid_at.id_for_label }}" class="col-sm-12 col-form-label">Pago em:</label>
-                        <div class="col-sm-12">
-                            {{ form.paid_at }}
+                        <div class="col">
+                            <div class="form-outline mb-4">
+                                {{ form.paid_at.errors }}
+                                <label for="{{ form.paid_at.id_for_label }}" class="col-sm-12 col-form-label">Pago em:</label>
+                                <div class="col-sm-12">
+                                    {{ form.paid_at }}
+                                </div>
+                            </div>        
                         </div>
                     </div>
 
@@ -69,7 +74,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
+                    <div class="mb-5 row">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button style="border-radius: 50px;" type="submit" class="btn btn-dark btn-lg">Salvar</button>
                         </div>

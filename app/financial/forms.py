@@ -14,3 +14,10 @@ class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
         fields = ['title', 'amount', 'expires_at', 'paid_at', 'status', 'notes']
+
+class ExpenseDeleteForm(forms.ModelForm):
+    id = forms.CharField(label="Id", max_length=100, widget=forms.TextInput(attrs={"class": "form-control"}))
+    
+    class Meta:
+        model = Expense
+        fields = ['id']

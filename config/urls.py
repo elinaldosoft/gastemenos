@@ -23,7 +23,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import path
 
 from app.accounts.views import SignInView, SignUpView, ResetPasswordView
-from app.financial.views import DashboardView, FinancialView
+from app.financial.views import DashboardView, FinancialView, FinancialDeleteView
 
 urlpatterns = [
     path("", RedirectView.as_view(url='sign-in', permanent=False), name='home_page'),  # Redirect to sign-in
@@ -38,6 +38,8 @@ urlpatterns = [
           template_name="accounts/password_reset_complete.html"), name="password_reset_complete"),
     path("nova", login_required(FinancialView.as_view()), name="create_or_edit_expense"),
     path("conta/<int:pk>", login_required(FinancialView.as_view()), name="edit_expense"),
+    path("conta/remove", login_required(FinancialDeleteView.as_view()), name="delete_expense_confirm"),
+    path("conta/remove/<int:pk>", login_required(FinancialDeleteView.as_view()), name="delete_expense"),
     path("dashboard", login_required(DashboardView.as_view()), name="dashboard"),
     path("admin/", admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
