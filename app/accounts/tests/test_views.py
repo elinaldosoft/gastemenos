@@ -5,7 +5,6 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from app.accounts.models import User
 
 
-
 class PasswordResetViewTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(name="User Teste", email="teste@teste.com",  password='testpassword')
