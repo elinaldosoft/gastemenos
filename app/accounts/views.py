@@ -20,6 +20,8 @@ class SignUpView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         form = self.form_class()
+        if request.user.is_authenticated:
+            return redirect(reverse("dashboard"))
         return render(request, self.template_name, {'form': form})
 
     def post(self, request: HttpRequest) -> HttpResponse:
