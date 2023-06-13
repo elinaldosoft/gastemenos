@@ -8,20 +8,36 @@
 <div class="container-sm signup mb-5">
     <div class="">
         <div class="row">
-            <div class="col-sm-5">
+            <div class="col-sm-7">
+                {% if '/conta' in request.path %}
+
                 <div class="p-1 mb-4 rounded-3">
+                    <figure class="figure">
+                        <img src="{% static 'img/editardespesa.jpg' %}" class="figure-img img-fluid float-end mx-auto" id="imagemEditarDespesa" alt="...">
+                    </figure>
+                </div>
+                {% else %}
+                <div class="p-1 mb-4 rounded-3">
+                    <figure class="figure">
+                        <img src="{% static 'img/novadespesa.jpg' %}" class="figure-img img-fluid float-end mx-auto" alt="...">
+                    </figure>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-sm-5">
+                <div class="p-1 mb-4 rounded-3" id="edicaoDespesa">
                     <div class="container-fluid py-5">
                         {% if '/conta' in request.path %}
-                            <h4 class="display-6 fw-bold">Edição de despesa #{{ form.instance.id }}.</h4>
+                        <h4 class="display-6 fw-bold">Edição de despesa #{{ form.instance.id }}.</h4>
                         {% else %}
-                            <h4 class="display-6 fw-bold">Cadastro de nova despesa.</h4>
+                        <h4 class="display-6 fw-bold">Cadastro de nova despesa.</h4>
                         {% endif %}
                     </div>
                 </div>
                 <form action="{% url 'create_or_edit_expense' %}" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="id" value="{{ form.instance.id }}">
-                    <div class="form-outline mb-4">
+                    <div class="form-outline mb-4" id="nomeEdicaoDespesa">
                         {{ form.title.errors }}
                         <label for="{{ form.title.id_for_label }}" class="col-sm-12 col-form-label">Nome:</label>
                         <div class="col-sm-12">
@@ -29,7 +45,7 @@
                         </div>
                     </div>
 
-                    <div class="form-outline mb-4">
+                    <div class="form-outline mb-4" id="valorEdicaoDespesa">
                         {{ form.amount.errors }}
                         <label for="{{ form.amount.id_for_label }}" class="col-sm-12 col-form-label">Valor:</label>
                         <div class="col-sm-12">
@@ -54,7 +70,7 @@
                                 <div class="col-sm-12">
                                     {{ form.paid_at }}
                                 </div>
-                            </div>        
+                            </div>
                         </div>
                     </div>
 
@@ -81,21 +97,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-sm-7">
-                {% if '/conta' in request.path %}
-                    <div class="p-1 mb-4 rounded-3">
-                        <figure class="figure">
-                        <img src="{% static 'img/editardespesa.jpg' %}" class="figure-img img-fluid float-end mx-auto" alt="...">                        
-                        </figure>
-                    </div>
-                {% else %}
-                    <div class="p-1 mb-4 rounded-3">
-                        <figure class="figure">
-                        <img src="{% static 'img/novadespesa.jpg' %}" class="figure-img img-fluid float-end mx-auto" alt="...">                        
-                        </figure>
-                    </div>
-                {% endif %}
-            </div>
+
         </div>
     </div>
 </div>

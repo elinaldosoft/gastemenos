@@ -1,186 +1,201 @@
 {% load static %}
 <!doctype html>
 <html lang="pt-br" data-bs-theme="auto">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.111.3">
-    <title>Gaste menos e seja feliz</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
-    <!-- Favicons -->
-    <meta name="theme-color" content="#712cf9">
-    {% block extra_js %}{% endblock %}
-    {% block extra_css %}{% endblock %}
-    <style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="generator" content="Hugo 0.111.3">
+<title>Gaste menos e seja feliz</title>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+<!-- Favicons -->
+<meta name="theme-color" content="#712cf9">
+{% block extra_js %}{% endblock %}
+{% block extra_css %}{% endblock %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Graduate&family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
-      @import url('https://fonts.googleapis.com/css2?family=Graduate&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    scroll-behavior: smooth;
+  }
 
-      * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          font-family: 'Roboto', sans-serif;
-          scroll-behavior: smooth;
-      }
+  .navbar {
+    padding: 15px 30px;
+    justify-content: space-between;
+  }
 
-      .navbar {
-          padding: 15px 30px;
-          justify-content: space-between;
-      }
+  @media (max-width: 540px) {
+    .navbar {
+      padding: 5px 0px;
+    }
 
-      @media (max-width: 540px) {
-        .navbar { 
-          padding: 5px 0px;
-      }
-      }
+    #edicaoDespesa {
+      margin-left: 40px;
+    }
 
-      .logo {
-          font-size: 24px;
-          font-family: 'Graduate', cursive;
-          color: gray;
-      }
+    #nomeEdicaoDespesa {
+      margin-top: 0;
+    }
 
-      .logo span {
-          color:#0dcaf0;
-          font-family: 'Graduate', cursive;
-      }
+    #imagemEditarDespesa {
+      margin-top: 50px;
+    }
+  }
 
-      .menu {
-          align-items: end;
-          flex-grow: 0;
-      }
+  .logo {
+    font-size: 24px;
+    font-family: 'Graduate', cursive;
+    color: gray;
+  }
 
-      .username-top {
-        font-weight: 400;
-        margin: auto 3px auto 0;
-      }
+  .logo span {
+    color: #0dcaf0;
+    font-family: 'Graduate', cursive;
+  }
 
-      .container {
-          min-height: 50vh;
-          align-items: center;
-          display: flex;
-      }
+  .menu {
+    align-items: end;
+    flex-grow: 0;
+  }
 
-      .bnn {
-          text-align: center;
-          margin: 100px 0 0 0;
-          font-size: 2.5em;
-      }
+  .username-top {
+    font-weight: 400;
+    margin: auto 3px auto 0;
+  }
 
-      .signin h1 {
-          text-align: center;
-      }
+  .container {
+    min-height: 50vh;
+    align-items: center;
+    display: flex;
+  }
 
-      .signin {
-          align-items: center;
-          margin: 0 auto;
-          width: 350px;
-      }
+  .bnn {
+    text-align: center;
+    margin: 100px 0 0 0;
+    font-size: 2.5em;
+  }
 
-      .signup {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+  .signin h1 {
+    text-align: center;
+  }
 
-      .cad:hover {
-          color: #fff;
-      }
+  .signin {
+    align-items: center;
+    margin: 0 auto;
+    width: 350px;
+  }
 
-      .bt-white {
-          color: #fff;
-      }
+  .signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-      .button {
-          width: 100%;
-          margin: 0 auto;
-      }
+  .cad:hover {
+    color: #fff;
+  }
 
-      .errorlist {
-          color: red;
-      }
+  .bt-white {
+    color: #fff;
+  }
 
-      .dashboard img {
-          max-width:500px;
-          max-height:500px;
-          width: auto;
-          height: auto;
-      }
+  .button {
+    width: 100%;
+    margin: 0 auto;
+  }
 
-      a:link {
-          text-decoration: none;
-      }
+  .errorlist {
+    color: red;
+  }
 
-      .close {
-          position: relative;
-          float: right;
-          font-size: 40px;
-          font-weight: bold;
-          line-height: 1px;
-          color: #000;
-          text-shadow: none;
-          background-color: transparent;
-          border: 0;
-          padding: 0;
-          margin-left: 1px;
-      }
+  .dashboard img {
+    max-width: 500px;
+    max-height: 500px;
+    width: auto;
+    height: auto;
+  }
 
-      .close:hover {
-          color: #ff0000;
-      }
-      .alert {
-        font-size: 18px;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        flex: auto;
-      }
-      .card {
-        margin-top: 20px;
-      }
-    </style>
+  a:link {
+    text-decoration: none;
+  }
 
-    <!-- Custom styles for this template -->
-    <!-- <link href="{% static 'css/sign-in.css' %}" rel="stylesheet"> -->
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-sm">
-        <!-- Logo -->
-        <a class="navbar-brand logo" href="{% url 'home_page' %}">GM<span>$F</span></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Alterna navegação">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse menu" id="navbar">
-          {% if not user.is_authenticated %}
-            <div class="navbar-nav">
-              <!-- Menu Itens -->
-              <a class="nav-item nav-link" id="navbar" href="{% url 'sign-up' %}"><button type="button" class="btn btn-outline-info cad">Cadastre-se</button></a>
-              <a class="nav-item nav-link" id="navbar" href="{% url 'sign-in' %}"><button type="button" class="btn btn-outline-info cad">Entrar</button></a>
-            </div>
-          {% else %}
-            <h5 class="username-top"> Olá, <span class="text-info" style="font-weight: 500;">{{ user.name }}</span></h5>
-            <div class="navbar-nav">
-              <!-- Menu Itens -->
-              <a class="nav-item nav-link" id="navbar" href="{% url 'logout' %}?next=sign-in"><button type="button" class="btn btn-outline-secondary cad">Sair</button></a>
-            </div>
-          {% endif %}
+  .close {
+    position: relative;
+    float: right;
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 1px;
+    color: #000;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    margin-left: 1px;
+  }
+
+  .close:hover {
+    color: #ff0000;
+  }
+
+  .alert {
+    font-size: 18px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex: auto;
+  }
+
+  .card {
+    margin-top: 20px;
+  }
+</style>
+
+<!-- Custom styles for this template -->
+<!-- <link href="{% static 'css/sign-in.css' %}" rel="stylesheet"> -->
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-sm">
+      <!-- Logo -->
+      <a class="navbar-brand logo" href="{% url 'home_page' %}">GM<span>$F</span></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Alterna navegação">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse menu" id="navbar">
+        {% if not user.is_authenticated %}
+        <div class="navbar-nav">
+          <!-- Menu Itens -->
+          <a class="nav-item nav-link" id="navbar" href="{% url 'sign-up' %}"><button type="button" class="btn btn-outline-info cad">Cadastre-se</button></a>
+          <a class="nav-item nav-link" id="navbar" href="{% url 'sign-in' %}"><button type="button" class="btn btn-outline-info cad">Entrar</button></a>
         </div>
+        {% else %}
+        <h5 class="username-top"> Olá, <span class="text-info" style="font-weight: 500;">{{ user.name }}</span></h5>
+        <div class="navbar-nav">
+          <!-- Menu Itens -->
+          <a class="nav-item nav-link" id="navbar" href="{% url 'logout' %}?next=sign-in"><button type="button" class="btn btn-outline-secondary cad">Sair</button></a>
+        </div>
+        {% endif %}
       </div>
-    </nav>
-    {% block content %}{% endblock %}
-    <footer class="bd-footer fixed-bottom py-1 mt-2 bg-light">
-      <!-- Copyright -->
-      <div class="text-center p-3">
-        <span> &copy; {% now "Y" %} Gaste menos e seja feliz. Todos os direitos reservados</span>
-      </div>
-      <!-- Copyright -->
-    </footer>
-    {% block js_inline %}{% endblock %}
-  </body>
+    </div>
+  </nav>
+  {% block content %}{% endblock %}
+  <footer class="bd-footer fixed-bottom py-1 mt-2 bg-light">
+    <!-- Copyright -->
+    <div class="text-center p-3">
+      <span> &copy; {% now "Y" %} Gaste menos e seja feliz. Todos os direitos reservados</span>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  {% block js_inline %}{% endblock %}
+</body>
+
 </html>
