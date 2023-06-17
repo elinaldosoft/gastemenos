@@ -17,7 +17,7 @@
         <tr>
           <th><a href="{% url 'edit_expense' pk=expense.id %}" class="link-primary text-decoration-none">{{ expense.id }}</a></th>
           <td data-title="Título">{{ expense.title }}</td>
-          <td data-title="Tipo">Outros</td>
+          <td data-title="Tipo">{{ expense.type }}</td>
           <td data-title="Vencimento">{{ expense.expires_at|date:"d/m/Y" }}</td>
           <td data-title="Valor">R$ {{ expense.amount }}</td>
           <td data-title="Status">{{ expense.status }}</td>        

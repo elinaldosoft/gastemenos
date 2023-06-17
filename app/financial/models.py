@@ -10,6 +10,13 @@ STATUS_EXPENSE = (
     ('paid', 'Pago'),
 )
 
+TYPE_EXPENSE = (
+    ('Others', 'Outros'),
+    ('Home', 'Casa'),
+    ('Vehicles', 'Veículos'),
+    ('Education', 'Educação'),
+)
+
 class TypeExpense(BaseModel):
     name = models.CharField(max_length=255, verbose_name='Nome')
     description = models.TextField(verbose_name='Descrição', null=True, blank=True)
@@ -25,6 +32,7 @@ class TypeExpense(BaseModel):
 class Expense(BaseModel):
     title = models.CharField(max_length=255, verbose_name='Título')
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Valor')
+    type = models.CharField(max_length=255, verbose_name='Status', null=True, blank=True, choices=TYPE_EXPENSE)
     expires_at = models.DateField(verbose_name='Vencimento')
     paid_at = models.DateField(verbose_name='Pago em', null=True, blank=True)
     status = models.CharField(max_length=255, verbose_name='Status', null=True, blank=True, choices=STATUS_EXPENSE)

@@ -45,11 +45,24 @@
                         </div>
                     </div>
 
-                    <div class="form-outline mb-4" id="valorEdicaoDespesa">
-                        {{ form.amount.errors }}
-                        <label for="{{ form.amount.id_for_label }}" class="col-sm-12 col-form-label">Valor:</label>
-                        <div class="col-sm-12">
-                            {{ form.amount }}
+                    <div class="row">
+                        <div class="col">
+                                <div class="form-outline mb-4" id="valorEdicaoDespesa">
+                                    {{ form.amount.errors }}
+                                    <label for="{{ form.amount.id_for_label }}" class="col-sm-12 col-form-label">Valor:</label>
+                                    <div class="col-sm-12">
+                                        {{ form.amount }}
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-outline mb-4">
+                                {{ form.type.errors }}
+                                <label for="{{ form.type.id_for_label }}" class="col-sm-12 col-form-label">Tipo:</label>
+                                <div class="col-sm-12">
+                                    {{ form.type }}
+                                </div>
+                            </div>
                         </div>
                     </div>
 
