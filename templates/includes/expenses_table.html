@@ -20,10 +20,11 @@
           <td data-title="Tipo">{{ expense.type }}</td>
           <td data-title="Vencimento">{{ expense.expires_at|date:"d/m/Y" }}</td>
           <td data-title="Valor">R$ {{ expense.amount }}</td>
-          <td data-title="Status">{{ expense.status }}</td>        
-          {% if expense.is_paid == False %}
+          {% if not expense.is_paid %}
+            <td data-title="Status:">Pendente</td>
             <td data-title="Pago em:">Pendente</td>
           {% else %}
+            <td data-title="Status:">Pago</td>
             <td data-title="Pago em:">{{ expense.is_paid|date:"d/m/Y" }}</td>
           {% endif %}
           <td data-title="Opções">
