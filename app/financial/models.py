@@ -4,18 +4,6 @@ from django.db import models
 
 from app.models import BaseModel
 
-STATUS_EXPENSE = (
-    ('pending', 'Pendente'),
-    ('overdue', 'Vencida'),
-    ('paid', 'Pago'),
-)
-
-TYPE_EXPENSE = (
-    ('Others', 'Outros'),
-    ('Home', 'Casa'),
-    ('Vehicles', 'Veículos'),
-    ('Education', 'Educação'),
-)
 
 class TypeExpense(BaseModel):
     name = models.CharField(max_length=255, verbose_name='Nome')
@@ -30,14 +18,19 @@ class TypeExpense(BaseModel):
 
 
 class Expense(BaseModel):
+    PENDING, OVERDUE, PAID = "pending", "overdue", "paid"
+    STATUS_EXPENSE = (
+        (PENDING, 'Pendente'),
+        (OVERDUE, 'Vencido'),
+        (PAID, 'Pago'),
+    )
     title = models.CharField(max_length=255, verbose_name='Título')
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Valor')
-    type = models.CharField(max_length=255, verbose_name='Status', null=True, blank=True, choices=TYPE_EXPENSE)
     expires_at = models.DateField(verbose_name='Vencimento')
     paid_at = models.DateField(verbose_name='Pago em', null=True, blank=True)
     status = models.CharField(max_length=255, verbose_name='Status', null=True, blank=True, choices=STATUS_EXPENSE)
     notes = models.TextField(verbose_name='Observações', null=True, blank=True)
-    type_expense = models.ManyToManyField(TypeExpense, verbose_name='Tipo de Despesa')
+    type = models.ForeignKey('financial.TypeExpense', on_delete=models.DO_NOTHING, verbose_name='Tipo de Despesa', related_name="expenses", default='')
     user = models.ForeignKey('accounts.User', on_delete=models.DO_NOTHING, verbose_name='Usuário')
 
     def __str__(self) -> str:
@@ -50,8 +43,12 @@ class Expense(BaseModel):
 
     @property
     def is_paid(self) -> bool:
-        return self.status == 'paid' and self.paid_at
+        return self.status == self.PAID and self.paid_at
 
     @property
     def is_overdue(self) -> bool:
-        return self.status != 'paid' and self.expires_at < datetime.utcnow()
+        return self.status != self.PAID and self.expires_at < datetime.now().date()
+
+    def get_status_display(self):
+        status_dict = dict(self.STATUS_EXPENSE)
+        return status_dict.get(self.status, ('Desconhecido'))

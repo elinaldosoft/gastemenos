@@ -53,6 +53,7 @@ urlpatterns = [
     path(
         "conta/<int:pk>", login_required(FinancialView.as_view()), name="edit_expense"
     ),
+    path('conta/expenses', login_required(FinancialView.as_view()), name='get_expense_list'),
     path(
         "conta/remove",
         login_required(FinancialDeleteView.as_view()),

@@ -21,7 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY", default="django-insecure-$mh7gc_0cr^)!lk&c@-(9867mzm+sgz-sa30*2p&r3=2qn#3li")
+# SECRET_KEY = config("SECRET_KEY", default="django-insecure-$mh7gc_0cr^)!lk&c@-(9867mzm+sgz-sa30*2p&r3=2qn#3li")
+SECRET_KEY = "django-insecure-$mh7gc_0cr^)!lk&c@-(9867mzm+sgz-sa30*2p&r3=2qn#3li"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -80,7 +81,15 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
-    'default': config('DB_URL', default=f"sqlite:////{str(BASE_DIR)}/db.sqlite3", cast=db_url),
+    # 'default': config('DB_URL', default=f"sqlite:////{str(BASE_DIR)}/db.sqlite3", cast=db_url),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "gastemenos",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
+    }
 }
 
 # Password validation
@@ -136,5 +145,5 @@ EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.
 EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
-EMAIL_HOST_USER =  config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER =  config('EMAIL_HOST_USER',default='gastemenos2023@gmail.com')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='nojzflbzmvuzrvyg')

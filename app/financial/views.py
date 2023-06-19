@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.views import View
 from django.contrib import messages
 from django.views.generic import ListView
@@ -8,7 +10,7 @@ from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.utils import timezone
 
-from .models import Expense
+from .models import Expense, TypeExpense
 from .forms import ExpenseForm
 from .forms import ExpenseDeleteForm
 
@@ -52,6 +54,14 @@ class FinancialView(View):
         if form.is_valid():
             form = form.save(commit=False)
             form.user = request.user
+
+            if form.paid_at:
+                form.status = Expense.PAID
+            elif not form.paid_at and form.expires_at < datetime.now().date():
+                form.status = Expense.OVERDUE
+            else:
+                form.status = Expense.PENDING
+
             form.save()
             if expense:
                 messages.success(request, "Despesa atualizada com sucesso.")
@@ -76,11 +86,12 @@ class FinancialDeleteView(View):
     def post(self, request: HttpRequest) -> HttpResponse:
         expense = self.get_object(request.POST.get('id'))
         form = self.form_class(request.POST, instance=expense)
+
         if form.is_valid():
             form = form.save(commit=False)
             form.user = request.user
             form.deleted_at = timezone.now()
             form.save()
             messages.success(request, "Despesa removida com sucesso.")            
-            return redirect(reverse("dashboard"))        
+            return redirect(reverse("dashboard"))
         return render(request, self.template_name)

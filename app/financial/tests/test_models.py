@@ -7,7 +7,7 @@ from parameterized import parameterized
 from django.test import TestCase
 
 from app.accounts.models import User
-from app.financial.models import Expense, TypeExpense, STATUS_EXPENSE
+from app.financial.models import Expense, TypeExpense
 
 
 class TypeExpenseModelTest(TestCase):
@@ -44,22 +44,19 @@ class ExpenseModelTest(TestCase):
         self.type_expense = TypeExpense.objects.create(name="Vestuário", description="Roupas em geral")
 
     def test_status_expense(self):
-        self.assertEqual(STATUS_EXPENSE[0], ('paid', 'Pago'))
-        self.assertEqual(STATUS_EXPENSE[1], ('pending', 'Pendente'))
-        self.assertEqual(STATUS_EXPENSE[2], ('overdue', 'Vencida'))
+        self.assertEqual(Expense.PAID, 'paid')
+        self.assertEqual(Expense.PENDING, 'pending')
+        self.assertEqual(Expense.OVERDUE, 'overdue')
 
     def test_create_expense(self):
         expense = Expense.objects.create(
             title="Aluguel",
             amount=Decimal("159.50"),
             expires_at=datetime.utcnow() + timedelta(days=15),
-            status=STATUS_EXPENSE[1][0],
+            status=Expense.PENDING,
+            type=self.type_expense,
             user=self.user,
         )
-
-        expense.save()
-        type_expense = self.type_expense
-        expense.type_expense.add(type_expense)
 
         self.assertGreaterEqual(expense.id, 1)
         self.assertEqual(expense.title, "Aluguel")
@@ -71,14 +68,14 @@ class ExpenseModelTest(TestCase):
         self.assertEqual(expense.status, "pending")
         self.assertIsNone(expense.notes)
         self.assertIsNone(expense.paid_at)
-        self.assertEqual(expense.type_expense.get(), type_expense)
+        self.assertEqual(expense.type, self.type_expense)
         self.assertEqual(expense.user_id, self.user.id)
         self.assertEqual(expense.user.name, "User Teste Expense")
 
     @parameterized.expand(
         [
-            (STATUS_EXPENSE[0][0], "paid"),
-            (STATUS_EXPENSE[2][0], "overdue"),
+            (Expense.PAID, "paid"),
+            (Expense.OVERDUE, "overdue"),
         ]
     )
     def test_update_status_expense(self, status, excepted):
@@ -86,7 +83,8 @@ class ExpenseModelTest(TestCase):
             title="Aluguel",
             amount=Decimal("159.50"),
             expires_at=datetime.utcnow() + timedelta(days=15),
-            status=STATUS_EXPENSE[1][0],
+            status=Expense.PENDING,
+            type=self.type_expense,
             user=self.user,
         )
 
@@ -101,10 +99,10 @@ class ExpenseModelTest(TestCase):
 
     @parameterized.expand(
         [
-            (STATUS_EXPENSE[0][0], datetime.today(), True),
-            (STATUS_EXPENSE[0][0], None, False),
-            (STATUS_EXPENSE[1][0], datetime.today(), False),
-            (STATUS_EXPENSE[2][0], datetime.today(), False),
+            (Expense.PENDING, datetime.today(), False),
+            (Expense.PENDING, None, False),
+            (Expense.OVERDUE, datetime.today(), False),
+            (Expense.PAID, datetime.today(), True),
         ]
     )
     def test_is_paid(self, status, paid_at, excepted):
@@ -114,6 +112,7 @@ class ExpenseModelTest(TestCase):
             status=status,
             paid_at=paid_at,
             expires_at=datetime.utcnow() + timedelta(days=5),
+            type=self.type_expense,
             user=self.user,
         )
 
@@ -123,9 +122,9 @@ class ExpenseModelTest(TestCase):
 
     @parameterized.expand(
         [
-            (STATUS_EXPENSE[0][0], datetime.today() - timedelta(days=5), False),
-            (STATUS_EXPENSE[1][0], datetime.today() - timedelta(days=5), True),
-            (STATUS_EXPENSE[2][0], datetime.today() - timedelta(days=5), True),
+            (Expense.PENDING, datetime.today().date() - timedelta(days=5), True),
+            (Expense.OVERDUE, datetime.today().date() - timedelta(days=5), True),
+            (Expense.PAID, datetime.today().date() - timedelta(days=5), False),
         ]
     )
     def test_is_overdue(self, status, expires_at, excepted):
@@ -134,6 +133,7 @@ class ExpenseModelTest(TestCase):
             amount=Decimal("159.50"),
             status=status,
             expires_at=expires_at,
+            type=self.type_expense,
             user=self.user,
         )
 
@@ -144,3 +144,25 @@ class ExpenseModelTest(TestCase):
     def test_expense_not_exists(self):
         with self.assertRaises(Expense.DoesNotExist):
             Expense.objects.get(pk=-1)
+
+    @parameterized.expand(
+        [
+            (Expense.PENDING, 'Pendente'),
+            (Expense.OVERDUE, 'Vencido'),
+            (Expense.PAID, 'Pago'),
+            (None, 'Desconhecido'),
+        ]
+    )
+    def test_get_status_display(self, status, excepted):
+        expense = Expense.objects.create(
+            title="Aluguel",
+            amount=Decimal("159.50"),
+            status=status,
+            expires_at=datetime.now().date(),
+            type=self.type_expense,
+            user=self.user,
+        )
+
+        result = expense.get_status_display()
+
+        self.assertEqual(result, excepted)

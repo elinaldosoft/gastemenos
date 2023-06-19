@@ -46,3 +46,8 @@
 - python manage.py test (test full)
 - python manage.py test app/accounts (tests account)
 - python manage.py test app/financial (tests financial)
+
+### Example Insert in TypeExpense
+insert into financial_typeexpense (name, description, created_at, updated_at) values('Educação' ,'Estudos e relacionados',now(), now());
+insert into financial_typeexpense (name, description, created_at, updated_at) values('Transporte' ,'Transporte',now(), now());
+insert into financial_typeexpense (name, description, created_at, updated_at) values('Outros' ,'Outros',now(), now());
