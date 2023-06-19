@@ -52,3 +52,8 @@ class Expense(BaseModel):
     def get_status_display(self):
         status_dict = dict(self.STATUS_EXPENSE)
         return status_dict.get(self.status, ('Desconhecido'))
+
+    def get_invert_status_display(self, search):
+        status_dict = dict(Expense.STATUS_EXPENSE)
+        inverted_dict = {v: k for k, v in status_dict.items()}
+        return inverted_dict.get(search, None)

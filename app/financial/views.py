@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.views import View
 from django.contrib import messages
+from django.db.models import Q
 from django.views.generic import ListView
 from django.urls import reverse
 from django.contrib.postgres.search import SearchVector
@@ -20,14 +21,28 @@ class DashboardView(ListView):
     paginate_by = 20
     model = Expense
 
+    # def get_queryset(self):
+    #     """
+    #         https://www.postgresql.org/docs/current/datatype-textsearch.html
+    #         tsvector search
+    #     """
+    #     query = super().get_queryset().filter(user=self.request.user)
+    #     if search := self.request.GET.get('search'):
+    #         query = query.annotate(search=SearchVector('title', 'notes')).filter(search=search)
+    #     return query
+
     def get_queryset(self):
-        """
-            https://www.postgresql.org/docs/current/datatype-textsearch.html
-            tsvector search
-        """
         query = super().get_queryset().filter(user=self.request.user)
         if search := self.request.GET.get('search'):
-            query = query.annotate(search=SearchVector('title', 'notes')).filter(search=search)
+
+            if search in ('Vencido', 'Pago', 'Pendente'):
+                search = Expense.get_invert_status_display(self, search)
+
+            query = Expense.objects.filter(
+                Q(title__iexact=search)
+                | Q(status__iexact=search)
+                | Q(type__name__iexact=search)
+            )
         return query
 
     def post(self, request: HttpRequest) -> HttpResponse:

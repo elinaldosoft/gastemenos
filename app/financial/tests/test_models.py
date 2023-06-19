@@ -166,3 +166,25 @@ class ExpenseModelTest(TestCase):
         result = expense.get_status_display()
 
         self.assertEqual(result, excepted)
+
+    @parameterized.expand(
+            [
+                ('Pendente', Expense.PENDING,),
+                ('Vencido', Expense.OVERDUE,),
+                ('Pago', Expense.PAID,),
+                ('Desconhecido', None),
+            ]
+    )
+    def test_get_invert_status_display(self, status, excepted):
+        expense = Expense.objects.create(
+            title="Aluguel",
+            amount=Decimal("159.50"),
+            status=status,
+            expires_at=datetime.now().date(),
+            type=self.type_expense,
+            user=self.user,
+        )
+
+        result = expense.get_invert_status_display(status)
+
+        self.assertEqual(result, excepted)
