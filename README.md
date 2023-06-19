@@ -48,6 +48,11 @@
 - python manage.py test app/financial (tests financial)
 
 ### Example Insert in TypeExpense
-insert into financial_typeexpense (name, description, created_at, updated_at) values('Educação' ,'Estudos e relacionados',now(), now());
-insert into financial_typeexpense (name, description, created_at, updated_at) values('Transporte' ,'Transporte',now(), now());
-insert into financial_typeexpense (name, description, created_at, updated_at) values('Outros' ,'Outros',now(), now());
+    # postgres
+    insert into financial_typeexpense (name, description, created_at, updated_at) values('Educação' ,'Estudos e relacionados',now(), now());
+    insert into financial_typeexpense (name, description, created_at, updated_at) values('Transporte' ,'Transporte',now(), now());
+    insert into financial_typeexpense (name, description, created_at, updated_at) values('Outros' ,'Outros',now(), now());
+    # sqlite
+    insert into financial_typeexpense (name, description, created_at, updated_at) values('Educação' ,'Estudos e relacionados', datetime('now','localtime'), datetime('now','localtime'));
+    insert into financial_typeexpense (name, description, created_at, updated_at) values('Transporte' ,'Transporte', datetime('now','localtime'), datetime('now','localtime'));
+    insert into financial_typeexpense (name, description, created_at, updated_at) values('Outros' ,'Outros', datetime('now','localtime'), datetime('now','localtime'));
