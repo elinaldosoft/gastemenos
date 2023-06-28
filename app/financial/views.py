@@ -1,14 +1,17 @@
-from datetime import datetime
+import calendar
+import locale
+from datetime import datetime, timedelta
 
+from django.db.models.functions import ExtractMonth
 from django.views import View
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.views.generic import ListView
 from django.urls import reverse
 from django.contrib.postgres.search import SearchVector
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.utils import timezone
 
 from .models import Expense, TypeExpense
@@ -38,7 +41,7 @@ class DashboardView(ListView):
             if search in ('Vencido', 'Pago', 'Pendente'):
                 search = Expense.get_invert_status_display(self, search)
 
-            query = Expense.objects.filter(
+            query = query.filter(
                 Q(title__iexact=search)
                 | Q(status__iexact=search)
                 | Q(type__name__iexact=search)
@@ -110,3 +113,41 @@ class FinancialDeleteView(View):
             messages.success(request, "Despesa removida com sucesso.")            
             return redirect(reverse("dashboard"))
         return render(request, self.template_name)
+
+
+class ReportsView(View):
+    def get(self, request, type_expense=None, *args, **kwargs):
+        locale.setlocale(locale.LC_TIME, 'pt_BR.utf8')
+        if type_expense:
+            expense_totals = Expense.objects.filter(
+                user=request.user
+            ).values('type__name').annotate(total=Sum('amount'))
+
+            data = []
+            labels = []
+
+            for expense_total in expense_totals:
+                type_name = expense_total['type__name']
+                total_amount = expense_total['total']
+                data.append(total_amount)
+                labels.append(type_name)
+            data_json = {'data': data, 'labels': labels}
+        else:
+            result = Expense.objects.filter(
+                user=request.user, expires_at__gte=datetime.now() - timedelta(days=365)
+            ).annotate(
+                month=ExtractMonth('expires_at')
+            ).values('month').annotate(total=Sum('amount'))
+
+            data = []
+            labels = []
+
+            for entry in result:
+                month = entry['month']
+                month = calendar.month_abbr[month]
+                total = entry['total']
+                data.append(total)
+                labels.append(month)
+            data_json = {'data': data, 'labels': labels}
+
+        return JsonResponse(data_json)

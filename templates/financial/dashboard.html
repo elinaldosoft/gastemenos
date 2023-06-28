@@ -3,6 +3,20 @@
 
 {% block content %}
 <div class="container-sm dashboard">
+    <div class="row">
+        <div class="col-md-4" style="margin:auto">
+            <br>
+            <h3>Despesas (12M):</h3>
+            <canvas id="sum_expenses" width="200" height="200"></canvas>
+        </div>
+        <div class="col-md-4" style="margin:auto">
+            <br>
+            <h3>Tipos Despesas (12M):</h3>
+            <canvas id="total_type_expenses" width="200" height="200"></canvas>
+        </div>
+    </div>
+</div>
+<div class="container-sm dashboard">
     <div class="row py-5 justify-content-between">
         <div class="col-md-8 d-flex mb-2">
             <div class="sm-6 d-flex justify-content-between">
@@ -15,7 +29,7 @@
         <div class="col-lg-4 justify-content-lg-end" style="display: flex; align-content: center;">
             <form action="{% url 'dashboard' %}" method="get"  style="display: flex; align-items: center;">
                 <div class="input-group">
-                    <input type="text" name="search" value="{{ request.GET.search }}" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2">
+                    <input type="text" name="search" value="{{ request.GET.search }}" class="form-control" placeholder="Título, Tipo ou Status" aria-label="Buscar" aria-describedby="button-addon2">
                     <button class="btn btn btn-primary" type="submit"><i class="fas fa-search"></i>Buscar <i class="fas fa-search"></i></button>
                     <a href="." class="btn btn-secondary">Limpar</a>
                 </div>
@@ -46,4 +60,12 @@
         </div>
     {% endif %}
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/chart.js' %}"></script>
+<script>
+    window.onload = function(e){
+    render_sum_expenses('{% url "report_expense" %}')
+    render_total_type_expenses('{% url "report_type_expense" %}')
+}
+</script>
 {% endblock %}
