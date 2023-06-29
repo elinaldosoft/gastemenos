@@ -14,7 +14,7 @@
 - python -m venv venv
 - venv\Scripts\Activate.ps1
 - poetry install
-- python manage.py check
+- venv\Scripts\Activate.ps1
 - python manage.py makemigrations
 - python manage.py migrate (To create the structure (schemas, tables) the database)
 

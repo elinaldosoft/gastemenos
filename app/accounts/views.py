@@ -1,4 +1,4 @@
-from django.contrib.auth.views import LoginView, PasswordResetView
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect
@@ -39,3 +39,17 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     success_message = "Se o email informado na solicitação for o cadastrado no sistema você receberá um link para redefinição de senha caso contrário entre em contato." \
                       " suporte: gastemenos2023@gmail.com"
     success_url = reverse_lazy('home_page')
+
+
+def password_change(request): 
+    if request.method == 'POST':
+        form = PasswordChangeView(request.POST, request=request)
+
+        if form.is_valid():
+            form.save()
+            return redirect('sign-in')
+    else:
+        form = PasswordChangeView(request=request)
+        
+        args = {'form': form}
+        return render(request, "password_change", args)
