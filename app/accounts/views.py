@@ -39,3 +39,10 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     success_message = "Se o email informado na solicitação for o cadastrado no sistema você receberá um link para redefinição de senha caso contrário entre em contato." \
                       " suporte: gastemenos2023@gmail.com"
     success_url = reverse_lazy('home_page')
+
+
+class EditAccView(SuccessMessageMixin, PasswordResetView):
+    form_class = SignUpForm
+    template_name = 'accounts/edit_account.html'
+    success_message = "Seus dados foram alterados com sucesso."
+    success_url = reverse_lazy('home_page')

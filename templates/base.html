@@ -181,6 +181,7 @@
         <h5 class="username-top"> Olá, <span class="text-info" style="font-weight: 500;">{{ user.name }}</span></h5>
         <div class="navbar-nav">
           <!-- Menu Itens -->
+          <a class="nav-item nav-link" id="navbar" href="{% url 'edit-account' %}?next=edit-acc"><button type="button" class="btn btn-dark cad">Editar Cadastro</button></a>
           <a class="nav-item nav-link" id="navbar" href="{% url 'logout' %}?next=sign-in"><button type="button" class="btn btn-outline-secondary cad">Sair</button></a>
         </div>
         {% endif %}
