@@ -27,6 +27,7 @@ from django.urls import path
 from app.accounts.views import SignInView, SignUpView, ResetPasswordView, EditAccView
 from app.financial.views import DashboardView, FinancialView, FinancialDeleteView, ReportsView
 
+
 report_type_expense = partial(ReportsView.as_view(), type_expense='type_expense')
 
 urlpatterns = [
@@ -52,6 +53,22 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
+
+    path(
+        "password_change/", 
+        auth_views.PasswordChangeView.as_view(
+         template_name="accounts/password_change.html"
+    ),
+          name="password_change"
+    ),
+    path(
+        "password_change/done/",
+        auth_views.PasswordChangeDoneView.as_view(
+             template_name="accounts/password_change_done.html"
+        ),
+        name="password_change_done",
+    ),
+
     path(
         "nova", login_required(FinancialView.as_view()), name="create_or_edit_expense"
     ),

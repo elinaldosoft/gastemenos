@@ -1,4 +1,4 @@
-from django.contrib.auth.views import LoginView, PasswordResetView
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect
@@ -46,3 +46,17 @@ class EditAccView(SuccessMessageMixin, PasswordResetView):
     template_name = 'accounts/edit_account.html'
     success_message = "Seus dados foram alterados com sucesso."
     success_url = reverse_lazy('home_page')
+
+
+def password_change(request):
+    if request.method == 'POST':
+        form = PasswordChangeView(request.POST, request=request)
+
+        if form.is_valid():
+            form.save()
+            return redirect('sign-in')
+    else:
+        form = PasswordChangeView(request=request)
+
+        args = {'form': form}
+        return render(request, "password_change", args)
