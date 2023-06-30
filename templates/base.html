@@ -12,6 +12,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"
+/>
+
 <!-- Favicons -->
 <meta name="theme-color" content="#712cf9">
 {% block extra_js %}{% endblock %}
@@ -65,6 +70,97 @@
     align-items: end;
     flex-grow: 0;
   }
+
+  /* PROFILE */
+  nav.header-menu {
+    background-color: #f8f9fa;
+    padding: 0 0 0 5px;
+    border-radius: 0.625rem;
+  }
+  
+  ul.header-menu {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+  
+    li.icon {
+    list-style-type: none;
+    position: relative;
+    padding: 0.625rem 0 0.5rem;
+  }
+  ul.header-menu li ul {
+    flex-direction: column;
+    position: absolute;
+    background-color: white;
+    align-items: flex-start;
+    transition: all 0.5s ease;
+    width: 20rem;
+    right: -3rem;
+    top: 3.5rem;
+    border-radius: 0.325rem;
+    gap: 0;
+    padding: 1rem 0rem;
+    opacity: 0;
+    box-shadow: 0px 0px 100px rgba(20, 18, 18, 0.1);
+    display: none;
+  }
+  
+  nav.header-menu ul li:hover > ul,
+  ul li ul:hover {
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+  }
+  
+  .material-icons-outlined {
+    color: #888888;
+    transition: all 0.3s ease-out;
+  }
+  
+  .profile-icon:hover {
+    fill: #575656;
+
+  }
+
+  .sub-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.725rem;
+    cursor: pointer;
+    padding: 0.5rem 1.5rem;
+  }
+  
+  .sub-item:hover {
+    background-color: rgba(232, 232, 232, 0.4);
+  }
+  
+  .sub-item:hover .material-icons-outlined {
+    color: #19d5e2;
+    cursor: pointer;
+  }
+  
+  .sub-item:hover p {
+    color: #000;
+    cursor: pointer;
+  }
+  
+  .sub-item p {
+    font-size: 0.85rem;
+    color: #888888;
+    font-weight: 500;
+    margin: 0.4rem 0;
+    flex: 1;
+  }
+
+  a.link-menu {
+    min-width: 100%;
+  }
+
+  /* -------------- */
 
   .username-top {
     font-weight: 400;
@@ -181,8 +277,33 @@
         <h5 class="username-top"> Olá, <span class="text-info" style="font-weight: 500;">{{ user.name }}</span></h5>
         <div class="navbar-nav">
           <!-- Menu Itens -->
-          <a class="nav-item nav-link" id="navbar" href="{% url 'edit-account' %}?next=edit-acc"><button type="button" class="btn btn-dark cad">Editar Cadastro</button></a>
-          <a class="nav-item nav-link" id="navbar" href="{% url 'logout' %}?next=sign-in"><button type="button" class="btn btn-outline-secondary cad">Sair</button></a>
+          <nav class="header-menu">
+            <ul class="header-menu">
+              <li class="icon">
+                  <svg class="profile-icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="38px" viewBox="0 0 24 24" width="38px" fill="#888888"><g><rect fill="none" height="24" width="24"/><rect fill="none" height="24" width="24"/></g><g><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 20 12 20z"/></g></svg>
+                <ul class="header-menu">
+                  <a class="link-menu" href="{% url 'dashboard' %}?next=dashboard">
+                    <li class="sub-item">
+                      <span class="material-icons-outlined"> grid_view </span>
+                      <p>Dashboard</p>
+                    </li>
+                  </a>
+                  <a class="link-menu" href="{% url 'edit-account' %}?next=edit-acc">
+                    <li class="sub-item">
+                      <span class="material-icons-outlined"> manage_accounts </span>
+                      <p>Edit Account</p>
+                    </li>
+                  </a>
+                  <a class="link-menu" href="{% url 'logout' %}?next=sign-in">
+                    <li class="sub-item">
+                      <span class="material-icons-outlined"> logout </span>
+                      <p>Logout</p> 
+                    </li>   
+                  </a>              
+                </ul>
+              </li>
+            </ul>
+          </nav>
         </div>
         {% endif %}
       </div>
