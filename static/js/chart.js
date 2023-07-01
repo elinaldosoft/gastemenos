@@ -22,6 +22,13 @@ function render_sum_expenses(url){
                     borderWidth: 1
                 }]
             },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+            }
         });
     })
 }
