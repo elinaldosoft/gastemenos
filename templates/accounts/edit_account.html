@@ -3,61 +3,61 @@
 
 {% block content %}
 <div class="container-sm signup">
-        <div class="row" style="width: 100%; display: flex; justify-content: space-between;">
-            <div class="col-sm-6">
-                <div class="p-1 mb-4 rounded-3">
-                    <div class="container-fluid py-5">
-                      <h1 class="display-5 fw-bold">Editar Cadastro</h1>
-                    </div>
+    <div class="row" style="width: 100%; display: flex; justify-content: space-between;">
+        <div class="col-sm-6">
+            <div class="p-1 mb-4 rounded-3">
+                <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">Editar Cadastro</h1>
                 </div>
-                <form action="/sign-up" method="post">
-                    {% csrf_token %}
-                    <div class="form-outline mb-4">
-                        {{ form.name.errors }}
-                        <label for="{{ form.name.id_for_label }}" class="col-sm-12 col-form-label">Nome:</label>
-                        <div class="col-sm-12">
-                            {{ form.name }}
-                        </div>
-                    </div>
-    
-                    <div class="mb-3 row">
-                        {{ form.email.errors }}
-                        <label for="{{ form.email.id_for_label }}" class="col-sm-12 col-form-label">E-mail:</label>
-                        <div class="col-sm-12">
-                            {{ form.email }}
-                        </div>
-                    </div>
-    
-                    <div class="mb-3 row">
-                        <!-- INSERIR TELEFONE NO FORMS -->
-                        {{ form.password.errors }}
-                        <label for="{{ form.password.id_for_label }}" class="col-sm-12 col-form-label">Telefone:</label>
-                        <div class="col-sm-12">
-                            {{ form.password }}
-                        </div>
-                    </div>
-                    
-                    <div class="mb-3 row">
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button style="border-radius: 50px;" type="submit" class="btn btn-dark btn-lg">Confirmar</button>
-                        </div>
-                    </div>
-                </form>
             </div>
-            <div class="col-sm-4">
-                <div class="p-1 mb-4 rounded-3">
-                    <div class="container-fluid py-5">
-                      <h1 class="display-5 fw-bold">Ações</h1>
+            <form action="/sign-up" method="post">
+                {% csrf_token %}
+                <div class="form-outline mb-4">
+                    {{ form.name.errors }}
+                    <label for="{{ form.name.id_for_label }}" class="col-sm-12 col-form-label">Nome:</label>
+                    <div class="col-sm-12">
+                        {{ form.name }}
                     </div>
                 </div>
-                <div class="d-grid gap-2 d-md-flex mb-2">
-                    <button style="border-radius: 50px;" type="submit" class="btn btn-dark btn-lg">Resetar Senha</button>
+
+                <div class="mb-3 row">
+                    {{ form.email.errors }}
+                    <label for="{{ form.email.id_for_label }}" class="col-sm-12 col-form-label">E-mail:</label>
+                    <div class="col-sm-12">
+                        {{ form.email }}
+                    </div>
                 </div>
-                <div class="d-grid gap-2 d-md-flex">
-                    <button style="border-radius: 50px;" type="submit" class="btn btn-dark btn-lg">Deletar Cadastro</button>
+
+                <div class="mb-3 row">
+                    <!-- INSERIR TELEFONE NO FORMS -->
+                    {{ form.password.errors }}
+                    <label for="{{ form.password.id_for_label }}" class="col-sm-12 col-form-label">Telefone:</label>
+                    <div class="col-sm-12">
+                        {{ form.password }}
+                    </div>
                 </div>
+
+                <div class="mb-3 row">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button style="border-radius: 50px;" type="submit" class="btn btn-dark btn-lg">Confirmar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-4">
+            <div class="p-1 mb-4 rounded-3">
+                <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">Ações</h1>
+                </div>
+            </div>
+            <div class="d-grid gap-2 d-md-flex mb-2">
+                <a class="link-menu" href="{% url 'password_change' %}?next=password_change"> <button style="border-radius: 50px;" type="submit" class="btn btn-dark btn-lg"> Resetar Senha </button></a>
+            </div>
+            <div class="d-grid gap-2 d-md-flex">
+                <button style="border-radius: 50px;" type="submit" class="btn btn-dark btn-lg">Deletar Cadastro</button>
             </div>
         </div>
     </div>
+</div>
 </div>
 {% endblock %}
