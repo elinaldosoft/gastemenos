@@ -58,7 +58,7 @@ class EditAccountView(SuccessMessageMixin, PasswordResetView):
             form = form.save(commit=False)
             form.save()
             messages.success(request, "Perfil atualizado com sucesso.")
-            return redirect(reverse("edit-account"))
+            return redirect(reverse("dashboard"))
         return render(request, self.template_name)
 
 
