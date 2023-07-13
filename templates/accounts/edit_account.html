@@ -21,7 +21,7 @@
                 {% csrf_token %}
                 <div class="form-outline mb-4">
                     {{ form.name.errors }}
-                    <label for="{{ form.name.id_for_label }}" class="col-sm-12 col-form-label">Nome:</label>
+                    <label for="{{ form.name.id_for_label }}" class="col-sm-12 col-form-label">Nome</label>
                     <div class="col-sm-12">
                         {{ form.name }}
                     </div>
@@ -29,16 +29,15 @@
 
                 <div class="mb-3 row">
                     {{ form.email.errors }}
-                    <label for="{{ form.email.id_for_label }}" class="col-sm-12 col-form-label">E-mail:</label>
+                    <label for="{{ form.email.id_for_label }}" class="col-sm-12 col-form-label">E-mail <img style="width: 14px; padding-bottom: 4px;" src="static/img/question-circle.png" title="Para alteração de e-mail, entre em contato com o time de suporte"alt=""></label>
                     <div class="col-sm-12">
                         <input type="text" value="{{ request.user.email }}" name="phone" class="form-control" maxlength="100" required="" id="id_phone" disabled>
                     </div>
                 </div>
 
                 <div class="mb-3 row">
-                    <!-- INSERIR TELEFONE NO FORMS -->
                     {{ form.password.errors }}
-                    <label for="{{ form.password.id_for_label }}" class="col-sm-12 col-form-label">Telefone:</label>
+                    <label for="{{ form.password.id_for_label }}" class="col-sm-12 col-form-label">Telefone</label>
                     <div class="col-sm-12">
                         {{ form.phone }}
                     </div>
@@ -46,7 +45,7 @@
 
                 <div class="mb-3 row">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button style="border-radius: 50px;" type="submit" class="btn btn-dark btn-lg">Confirmar</button>
+                        <button style="border-radius: 50px; color: #fff;" type="submit" class="btn btn-info btn-lg">Confirmar</button>
                     </div>
                 </div>
             </form>
