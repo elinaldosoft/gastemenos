@@ -17,7 +17,7 @@
                     <h1 class="display-5 fw-bold">Editar Cadastro</h1>
                 </div>
             </div>
-            <form action="/sign-up" method="post">
+            <form action="/edit-account" method="post">
                 {% csrf_token %}
                 <div class="form-outline mb-4">
                     {{ form.name.errors }}
@@ -31,7 +31,7 @@
                     {{ form.email.errors }}
                     <label for="{{ form.email.id_for_label }}" class="col-sm-12 col-form-label">E-mail:</label>
                     <div class="col-sm-12">
-                        {{ form.email }}
+                        <input type="text" value="{{ request.user.email }}" name="phone" class="form-control" maxlength="100" required="" id="id_phone" disabled>
                     </div>
                 </div>
 
@@ -40,7 +40,7 @@
                     {{ form.password.errors }}
                     <label for="{{ form.password.id_for_label }}" class="col-sm-12 col-form-label">Telefone:</label>
                     <div class="col-sm-12">
-                        {{ form.password }}
+                        {{ form.phone }}
                     </div>
                 </div>
 

@@ -28,3 +28,12 @@ class SignUpForm(RequestModelForm):
 class SignInForm(forms.Form):
     email = forms.EmailField(label="Seu e-mail", max_length=100, widget=forms.TextInput(attrs={"class": "form-control"}))
     password = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control", "type": "password"}))
+
+
+class EditForm(RequestModelForm):
+    name = forms.CharField(label="Seu nome", max_length=100, widget=forms.TextInput(attrs={"class": "form-control"}))
+    phone = forms.CharField(label="Seu nome", max_length=100, widget=forms.TextInput(attrs={"class": "form-control"}))
+
+    class Meta:
+        model = User
+        fields = ('name', 'phone', )

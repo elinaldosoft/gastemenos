@@ -1,12 +1,13 @@
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.views import View
 
-from .forms import SignUpForm
+from .forms import SignUpForm, EditForm
 
 
 class SignInView(LoginView):
@@ -41,11 +42,24 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     success_url = reverse_lazy('home_page')
 
 
-class EditAccView(SuccessMessageMixin, PasswordResetView):
-    form_class = SignUpForm
+class EditAccountView(SuccessMessageMixin, PasswordResetView):
+    form_class = EditForm
     template_name = 'accounts/edit_account.html'
     success_message = "Seus dados foram alterados com sucesso."
     success_url = reverse_lazy('home_page')
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        form = self.form_class(instance=request.user)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request: HttpRequest) -> HttpResponse:
+        form = self.form_class(request.POST, instance=request.user)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.save()
+            messages.success(request, "Perfil atualizado com sucesso.")
+            return redirect(reverse("edit-account"))
+        return render(request, self.template_name)
 
 
 def password_change(request):

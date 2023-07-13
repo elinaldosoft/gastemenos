@@ -24,7 +24,7 @@ from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 from django.urls import path
 
-from app.accounts.views import SignInView, SignUpView, ResetPasswordView, EditAccView
+from app.accounts.views import SignInView, SignUpView, ResetPasswordView, EditAccountView
 from app.financial.views import DashboardView, FinancialView, FinancialDeleteView, ReportsView
 
 
@@ -36,7 +36,7 @@ urlpatterns = [
     ),  # Redirect to sign-in
     path("sign-in", SignInView.as_view(), name="sign-in"),
     path("sign-up", SignUpView.as_view(), name="sign-up"),
-    path("edit-account", login_required(EditAccView.as_view()), name="edit-account"),
+    path("edit-account", login_required(EditAccountView.as_view()), name="edit-account"),
     path("logout", login_required(auth_views.LogoutView.as_view()), name="logout"),
     path("password-reset/", ResetPasswordView.as_view(), name="password_reset"),
     path(
