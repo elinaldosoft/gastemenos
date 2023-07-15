@@ -14,6 +14,7 @@ from django.http.request import HttpRequest
 from django.http.response import HttpResponse, JsonResponse
 from django.utils import timezone
 
+from .constants import LIMIT_DAYS_RANGE_IN_QUERY
 from .models import Expense, TypeExpense
 from .forms import ExpenseForm
 from .forms import ExpenseDeleteForm
@@ -42,22 +43,27 @@ class DashboardView(ListView):
         end_date = self.request.GET.get('end_date')
 
         if search:
-            if search in ('Vencido', 'Pago', 'Pendente'):
-                search = Expense.get_invert_status_display(self, search)
+            search_status = search.lower()
+            if search_status in ('vencido', 'pago', 'pendente'):
+                search = Expense.get_invert_status_display(self, search_status.capitalize())
 
             query = query.filter(
-                Q(title__iexact=search)
-                | Q(status__iexact=search)
-                | Q(type__name__iexact=search)
+                Q(title__icontains=search)
+                | Q(status__icontains=search)
+                | Q(type__name__icontains=search)
             )
 
         if start_date and end_date:
             start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
             end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+
+            if (end_date - start_date).days > LIMIT_DAYS_RANGE_IN_QUERY:
+                start_date = None
+                end_date = None
         else:
             today = datetime.today()
             start_date = datetime(today.year, today.month, 1)
-            end_date = datetime(today.year, today.month, today.day)
+            end_date = datetime(today.year, 12, 31)
 
         query = query.filter(expires_at__range=[start_date, end_date])
 
@@ -72,10 +78,14 @@ class DashboardView(ListView):
         if start_date and end_date:
             context['start_date'] = start_date
             context['end_date'] = end_date
+            diff_dates = datetime.strptime(end_date, '%Y-%m-%d').date() - datetime.strptime(start_date, '%Y-%m-%d').date()
+
+            if diff_dates.days > LIMIT_DAYS_RANGE_IN_QUERY:
+                context['error_message'] = "A diferença entre as datas não pode ser superior a 1 ano."
         else:
             today = datetime.today()
             context['start_date'] = datetime(today.year, today.month, 1).strftime('%Y-%m-%d')
-            context['end_date'] = datetime(today.year, today.month, today.day).strftime('%Y-%m-%d')
+            context['end_date'] = datetime(today.year, 12, 31).strftime('%Y-%m-%d')
 
         return context
 
