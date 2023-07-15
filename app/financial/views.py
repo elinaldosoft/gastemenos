@@ -54,8 +54,30 @@ class DashboardView(ListView):
         if start_date and end_date:
             start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
             end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
-            query = query.filter(expires_at__range=[start_date, end_date])
+        else:
+            today = datetime.today()
+            start_date = datetime(today.year, today.month, 1)
+            end_date = datetime(today.year, today.month, today.day)
+
+        query = query.filter(expires_at__range=[start_date, end_date])
+
         return query
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        start_date = self.request.GET.get('start_date')
+        end_date = self.request.GET.get('end_date')
+
+        if start_date and end_date:
+            context['start_date'] = start_date
+            context['end_date'] = end_date
+        else:
+            today = datetime.today()
+            context['start_date'] = datetime(today.year, today.month, 1).strftime('%Y-%m-%d')
+            context['end_date'] = datetime(today.year, today.month, today.day).strftime('%Y-%m-%d')
+
+        return context
 
     def post(self, request: HttpRequest) -> HttpResponse:
         return render(request, self.template_name)

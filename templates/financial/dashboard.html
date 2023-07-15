@@ -32,8 +32,8 @@
             <form action="{% url 'dashboard' %}" method="get"  style="display: flex; align-items: center;">
                 <div class="input-group" style="flex-wrap: nowrap;">
                     <input type="text" name="search" value="{{ request.GET.search }}" class="form-control" style="width: 200px;" placeholder="Título, Tipo ou Status" aria-label="Buscar" aria-describedby="button-addon2">
-                    <input type="date" name="start_date" class="form-control" style="width: 140px;" placeholder="Data inicial" aria-label="Data inicial">
-                    <input type="date" name="end_date" class="form-control" style="width: 140px;" placeholder="Data final" aria-label="Data final">
+                    <input type="date" name="start_date" class="form-control" style="width: 140px;" placeholder="Data inicial" aria-label="Data inicial" value="{{ start_date }}">
+                    <input type="date" name="end_date" class="form-control" style="width: 140px;" placeholder="Data final" aria-label="Data final" value="{{ end_date }}">
                     <button class="btn btn btn-primary" type="submit"><i class="fas fa-search"></i>Buscar <i class="fas fa-search"></i></button>
                     <a href="." class="btn btn-secondary">Limpar</a>
                 </div>
