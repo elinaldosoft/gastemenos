@@ -36,8 +36,12 @@ class DashboardView(ListView):
 
     def get_queryset(self):
         query = super().get_queryset().filter(user=self.request.user)
-        if search := self.request.GET.get('search'):
 
+        search = self.request.GET.get('search')
+        start_date = self.request.GET.get('start_date')
+        end_date = self.request.GET.get('end_date')
+
+        if search:
             if search in ('Vencido', 'Pago', 'Pendente'):
                 search = Expense.get_invert_status_display(self, search)
 
@@ -46,6 +50,11 @@ class DashboardView(ListView):
                 | Q(status__iexact=search)
                 | Q(type__name__iexact=search)
             )
+
+        if start_date and end_date:
+            start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+            query = query.filter(expires_at__range=[start_date, end_date])
         return query
 
     def post(self, request: HttpRequest) -> HttpResponse:
