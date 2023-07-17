@@ -1,0 +1,36 @@
+@startuml
+actor user as "User"
+boundary form as "ExpenseDeleteForm"
+participant view as "FinancialDeleteView"
+database db as "Database"
+
+user -> form: Select expense to remove
+form -> view: get_object(expense.id)
+activate view
+view -> db: Fetch expense data
+activate db
+db --> view: Expense details
+deactivate db
+view -> form: Display expense details
+deactivate view
+
+user -> form: Confirm removal
+form -> view: form.is_valid()
+activate view
+view -> form: Validate form data
+alt Valid Data
+    form -> view: form.save()
+    view -> db: Remove expense entry
+    activate db
+    db --> view: Confirmation
+    deactivate db
+    view -> form: Success message
+else Invalid Data
+    form -> view: Data is invalid
+    form -> form: Display error message
+end
+deactivate view
+
+footer Sequence Diagram - Expense Remove (Spend Less)
+
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+actor user as "User"
+boundary form as "ExpenseForm"
+participant view as "FinancialView"
+database db as "Database"
+
+user -> form: Select expense to edit
+form -> view: get_object(expense.id)
+activate view
+view -> db: Fetch expense data
+activate db
+db --> view: Expense details
+deactivate db
+view -> form: Display expense details
+deactivate view
+
+user -> form: Modify expense details
+form -> view: form.is_valid()
+activate view
+view -> form: Data validation result
+deactivate view
+
+alt Valid Data
+    form -> view: form.save()
+    activate view
+    view -> db: Update expense data
+    activate db
+    db --> view: Confirmation
+    deactivate db
+    view -> form: Success message
+    deactivate view
+else Invalid Data
+    form -> form: Display validation error message
+end
+
+footer Sequence Diagram - Expense Update (Spend Less)
+
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+actor user as "User"
+boundary form as "ExpenseForm"
+participant view as "FinancialView"
+database db as "Database"
+
+user -> form: Fill expense details
+form -> view:  form.is_valid()
+activate view
+view -> form: Data validation result
+deactivate view
+
+alt Valid Data
+    form -> view: form.save()
+    activate view
+    view -> db: Save expense data
+    activate db
+    db --> view: Confirmation saving
+    deactivate db
+    view -> form: Success message
+    deactivate view
+else Invalid Data
+    form -> form: Display validation error message
+end
+
+footer Sequence Diagram - Expense Creation (Spend Less)
+
+@enduml
