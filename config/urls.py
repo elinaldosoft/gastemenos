@@ -88,6 +88,7 @@ urlpatterns = [
     path("dashboard", login_required(DashboardView.as_view()), name="dashboard"),
     path("report_expense", login_required(ReportsView.as_view()), name="report_expense"),
     path("report_type_expense", report_type_expense, name="report_type_expense"),
+    path("download_excel", login_required(DashboardView.as_view()), name="download_excel"),
     path("admin/", admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
