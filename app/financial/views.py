@@ -1,7 +1,9 @@
 import calendar
 import locale
+from collections import defaultdict
 from datetime import datetime, timedelta
 
+import openpyxl
 from django.db.models.functions import ExtractMonth
 from django.views import View
 from django.contrib import messages
@@ -69,6 +71,54 @@ class DashboardView(ListView):
 
         return query
 
+    def generate_excel_data(self, queryset):
+        workbook = openpyxl.Workbook()
+        worksheet = workbook.active
+
+        worksheet.append(['ID', 'Título', 'Tipo', 'Vencimento', 'Valor', 'Status', 'Pago em:'])
+
+        type_expense_dict = defaultdict(str)
+
+        type_expenses = TypeExpense.objects.all()
+
+        for type_expense in type_expenses:
+            type_expense_dict[type_expense.id] = type_expense.name
+
+        status_dict = dict(Expense.STATUS_EXPENSE)
+
+        for expense in queryset:
+            worksheet.append(
+                [
+                    expense.id,
+                    expense.title,
+                    type_expense_dict[expense.type_id],
+                    expense.expires_at,
+                    'R$ ' + str(expense.amount).replace('.', ','),
+                    status_dict.get(expense.status, ('Desconhecido')),
+                    expense.paid_at.strftime('%Y-%m-%d') if expense.paid_at else None,
+                ]
+            )
+
+        return workbook
+
+    def download_excel(self, request, queryset):
+        workbook = self.generate_excel_data(queryset)
+        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename=despesas.xlsx'
+        workbook.save(response)
+
+        return response
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+
+        generate_excel = self.request.GET.get('generate_excel')
+        if generate_excel == 'true':
+            response = self.download_excel(request, queryset)
+            return response
+
+        return super().get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -129,6 +179,7 @@ class FinancialView(View):
             return redirect(reverse("dashboard"))
         return render(request, self.template_name)
 
+
 class FinancialDeleteView(View):
     template_name = "financial/remove.html"
     form_class = ExpenseDeleteForm
@@ -151,7 +202,7 @@ class FinancialDeleteView(View):
             form.user = request.user
             form.deleted_at = timezone.now()
             form.save()
-            messages.success(request, "Despesa removida com sucesso.")            
+            messages.success(request, "Despesa removida com sucesso.")
             return redirect(reverse("dashboard"))
         return render(request, self.template_name)
 

@@ -42,7 +42,7 @@
 {% if page_obj.has_other_pages %}
 <div class="btn-group" role="group" aria-label="Item pagination">
     {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">&laquo;</a>
+        <a href="?search={{ request.GET.search }}&start_date={{ start_date }}&end_date={{ end_date }}&page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">&laquo;</a>
     {% endif %}
 
     {% for page_number in page_obj.paginator.page_range %}
@@ -51,13 +51,14 @@
                 <span>{{ page_number }}</span>
             </button>
         {% else %}
-            <a href="?page={{ page_number }}" class="btn btn-outline-primary">
+            <a href="?search={{ request.GET.search }}&start_date={{ start_date }}&end_date={{ end_date }}&page={{ page_number }}" class="btn btn-outline-primary">
                 {{ page_number }}
             </a>
         {% endif %}
     {% endfor %}
+
     {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">&raquo;</a>
+        <a href="?search={{ request.GET.search }}&start_date={{ start_date }}&end_date={{ end_date }}&page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">&raquo;</a>
     {% endif %}
 </div>
 {% endif %}
