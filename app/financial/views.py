@@ -1,16 +1,15 @@
 import calendar
-import locale
 from collections import defaultdict
 from datetime import datetime, timedelta
 
 import openpyxl
+
 from django.db.models.functions import ExtractMonth
 from django.views import View
 from django.contrib import messages
 from django.db.models import Q, Sum
 from django.views.generic import ListView
 from django.urls import reverse
-from django.contrib.postgres.search import SearchVector
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, JsonResponse
@@ -209,7 +208,6 @@ class FinancialDeleteView(View):
 
 class ReportsView(View):
     def get(self, request, type_expense=None, *args, **kwargs):
-        locale.setlocale(locale.LC_TIME, 'pt_BR.utf8')
         if type_expense:
             expense_totals = Expense.objects.filter(
                 user=request.user
@@ -226,7 +224,7 @@ class ReportsView(View):
             data_json = {'data': data, 'labels': labels}
         else:
             result = Expense.objects.filter(
-                user=request.user, expires_at__gte=datetime.now() - timedelta(days=365)
+                user=request.user, expires_at__gte=timezone.now() - timedelta(days=365)
             ).annotate(
                 month=ExtractMonth('expires_at')
             ).values('month').annotate(total=Sum('amount'))
