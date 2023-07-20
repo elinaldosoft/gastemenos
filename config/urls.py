@@ -24,7 +24,7 @@ from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 from django.urls import path
 
-from app.accounts.views import SignInView, SignUpView, ResetPasswordView, EditAccountView
+from app.accounts.views import SignInView, SignUpView, ResetPasswordView, EditAccountView, DeleteAccountView
 from app.financial.views import DashboardView, FinancialView, FinancialDeleteView, ReportsView
 
 
@@ -35,6 +35,7 @@ urlpatterns = [
         "", RedirectView.as_view(url="sign-in", permanent=False), name="home_page"
     ),  # Redirect to sign-in
     path("sign-in", SignInView.as_view(), name="sign-in"),
+    path("delete-account", DeleteAccountView.as_view(), name="delete-account"),
     path("sign-up", SignUpView.as_view(), name="sign-up"),
     path("edit-account", login_required(EditAccountView.as_view()), name="edit-account"),
     path("logout", login_required(auth_views.LogoutView.as_view()), name="logout"),
@@ -55,16 +56,16 @@ urlpatterns = [
     ),
 
     path(
-        "password_change/", 
+        "password_change/",
         auth_views.PasswordChangeView.as_view(
-         template_name="accounts/password_change.html"
-    ),
-          name="password_change"
+            template_name="accounts/password_change.html"
+        ),
+        name="password_change"
     ),
     path(
         "password_change/done/",
         auth_views.PasswordChangeDoneView.as_view(
-             template_name="accounts/password_change_done.html"
+            template_name="accounts/password_change_done.html"
         ),
         name="password_change_done",
     ),

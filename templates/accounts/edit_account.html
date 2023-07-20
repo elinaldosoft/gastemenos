@@ -56,7 +56,7 @@
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <a style="border-radius: 50px;" class="btn btn-warning btn-lg" href="{% url 'password_change' %}?next=password_change">Resetar Senha</a>
-                <button style="border-radius: 50px;" type="submit" class="btn btn-danger btn-lg">Deletar Cadastro</button>
+                <a style="border-radius: 50px;" class="btn btn-danger btn-lg" href="{% url 'delete-account' %}" onclick="if (confirm('Você tem certeza que deseja excluir todos seus dados?')){return true;}else{event.stopPropagation(); event.preventDefault();};">Deletar Cadastro</a>
             </div>
         </div>
     </div>

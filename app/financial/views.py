@@ -5,9 +5,9 @@ from datetime import datetime, timedelta
 import openpyxl
 
 from django.db.models.functions import ExtractMonth
+from django.db.models import Q, Sum
 from django.views import View
 from django.contrib import messages
-from django.db.models import Q, Sum
 from django.views.generic import ListView
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -25,16 +25,6 @@ class DashboardView(ListView):
     template_name = "financial/dashboard.html"
     paginate_by = 20
     model = Expense
-
-    # def get_queryset(self):
-    #     """
-    #         https://www.postgresql.org/docs/current/datatype-textsearch.html
-    #         tsvector search
-    #     """
-    #     query = super().get_queryset().filter(user=self.request.user)
-    #     if search := self.request.GET.get('search'):
-    #         query = query.annotate(search=SearchVector('title', 'notes')).filter(search=search)
-    #     return query
 
     def get_queryset(self):
         query = super().get_queryset().filter(user=self.request.user)

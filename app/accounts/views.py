@@ -1,13 +1,20 @@
+import uuid
+
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse, reverse_lazy
+from django.utils import timezone
+from django.contrib.auth import logout
 from django.contrib import messages
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.views import View
 
+from app.utils import get_ip_and_agent
+
 from .forms import SignUpForm, EditForm
+from .models import User
 
 
 class SignInView(LoginView):
@@ -74,3 +81,20 @@ def password_change(request):
 
         args = {'form': form}
         return render(request, "password_change", args)
+
+
+class DeleteAccountView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        messages.success(request, "Conta removida com sucesso.")
+        email = f"{uuid.uuid4()}-disable@gastemenos.com"
+        ip_agent = get_ip_and_agent(request)
+        data = {
+            'disable_ip': ip_agent.get('ip'),
+            'disable_agent': ip_agent.get('agent'),
+            'disable_email': request.user.email,
+            'email': email,
+            'disabled_at': timezone.now(),
+        }
+        User.objects.filter(id=request.user.id).update(**data)
+        logout(request)
+        return redirect(reverse("home_page"))

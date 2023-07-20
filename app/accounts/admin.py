@@ -21,4 +21,4 @@ class UserAdmin(GenericUserAdmin):
             },
         ),
     )
-    add_fieldsets = ((None, {'classes': ('wide',), 'fields': ('name', 'email', 'avatar', 'password1', 'password2')}),)
+    add_fieldsets = ((None, {'classes': ('wide',), 'fields': ('name', 'email', 'password1', 'password2')}),)
